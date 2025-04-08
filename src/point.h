@@ -1,6 +1,7 @@
 #pragma once
 #include <boost/operators.hpp>
 #include <iostream>
+#include <stdexcept>
 #include <vector>
 
 template <typename T> class Point2D : public boost::addable<Point2D<T>>, public boost::subtractable<Point2D<T>>
@@ -17,7 +18,7 @@ template <typename T> class Point2D : public boost::addable<Point2D<T>>, public 
         ~Point2D() {}
 
         // Required for operator addable
-        Point2D<T> operator+=(const Point2D<T> rhs)
+        Point2D<T> operator+=(const Point2D<T>& rhs)
         {
             x += rhs.x;
             y += rhs.y;
@@ -25,7 +26,7 @@ template <typename T> class Point2D : public boost::addable<Point2D<T>>, public 
         }
 
         // Required for operator substractable
-        Point2D<T> operator-=(const Point2D<T> rhs)
+        Point2D<T> operator-=(const Point2D<T>& rhs)
         {
             x -= rhs.x;
             y -= rhs.y;
@@ -77,7 +78,7 @@ template <typename T> class Point3D : public Point2D<T>, public boost::addable<P
         ~Point3D() {}
 
         // Required for operator addable
-        Point3D<T> operator+=(const Point3D<T> rhs)
+        Point3D<T> operator+=(const Point3D<T>& rhs)
         {
             this->x += rhs.x;
             this->y += rhs.y;
@@ -86,7 +87,7 @@ template <typename T> class Point3D : public Point2D<T>, public boost::addable<P
         }
 
         // Required for operator substractable
-        Point3D<T> operator-=(const Point3D<T> rhs)
+        Point3D<T> operator-=(const Point3D<T>& rhs)
         {
             this->x -= rhs.x;
             this->y -= rhs.y;
@@ -134,6 +135,26 @@ template <typename T> class Point3D4 : public Point3D<T>
         Point3D4(T _x, T _y, T _z, T _s) : Point3D<T>(_x, _y, _z), s(_s) {}
 
         ~Point3D4() {}
+
+        // Required for operator addable
+        Point3D4<T> operator+=(const Point3D4<T>& rhs)
+        {
+            this->x += rhs.x;
+            this->y += rhs.y;
+            this->z += rhs.z;
+            (this->s==1 && rhs.s==1) ? this->s = 1 : throw std::logic_error("scale of one of the point is not equal to `1`");
+            return *this;
+        }
+
+        // Required for operator substractable
+        Point3D4<T> operator-=(const Point3D4<T>& rhs)
+        {
+            this->x -= rhs.x;
+            this->y -= rhs.y;
+            this->z -= rhs.z;
+            (this->s==1 && rhs.s==1) ? this->s = 1 : throw std::logic_error("scale of one of the point is not equal to `1`");
+            return *this;
+        }
 
         void print() const override
         {
