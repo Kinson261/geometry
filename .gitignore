@@ -23,3 +23,6 @@ local_config.h
 
 # Ignore VSCode files
 .vscode/
+
+# Ignore cache
+.cache/
