@@ -1,9 +1,10 @@
 #pragma once
 #include <vector>
 #include <iostream>
+#include <boost/operators.hpp>
 
 template <typename T>
-class Point2D
+class Point2D : public boost::addable<Point2D<T>>, public boost::subtractable<Point2D<T>>
 {
 protected:
     T x, y;
@@ -13,6 +14,22 @@ public:
     Point2D(T x_val, T y_val) : x(x_val), y(y_val) {}
     Point2D() {}
     ~Point2D() {}
+
+    // Required for operator addable
+    Point2D<T> operator+=(const Point2D<T> rhs)
+    {
+        x += rhs.x;
+        y += rhs.y;
+        return *this;
+    }
+
+    // Required for operator substractable
+    Point2D<T> operator-=(const Point2D<T> rhs)
+    {
+        x -= rhs.x;
+        y -= rhs.y;
+        return *this;
+    }
 
     // Getter methods for x and y
     T getX() const { return x; }
@@ -38,7 +55,7 @@ public:
 };
 
 template <typename T>
-class Point3D : public Point2D<T>
+class Point3D : public Point2D<T>, public boost::addable<Point3D<T>>, public boost::subtractable<Point3D<T>>
 {
 protected:
     T z;
@@ -48,6 +65,24 @@ public:
     Point3D(T x_val, T y_val, T z_val) : Point2D<T>(x_val, y_val), z(z_val) {}
     Point3D() {}
     ~Point3D() {}
+
+    // Required for operator addable
+    Point3D<T> operator+=(const Point3D<T> rhs)
+    {
+        this->x += rhs.x;
+        this->y += rhs.y;
+        this->z += rhs.z;
+        return *this;
+    }
+
+    // Required for operator substractable
+    Point3D<T> operator-=(const Point3D<T> rhs)
+    {
+        this->x -= rhs.x;
+        this->y -= rhs.y;
+        this->z -= rhs.z;
+        return *this;
+    }
 
     // Getter method for z
     T getZ() const { return z; }
