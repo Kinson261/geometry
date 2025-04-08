@@ -3,8 +3,7 @@
 
 #include "src/point.h"
 
-template <typename T>
-void printPoint(T &pt)
+template <typename T> void printPoint(T& pt)
 {
     for (auto i : pt.get())
     {
