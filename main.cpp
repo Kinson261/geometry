@@ -1,9 +1,11 @@
 #include <iostream>
-#include <vector>
 
-#include "src/point.h"
+#include "src/point2D.h"
+#include "src/point3D.h"
+#include "src/point3D4.h"
 
-template <typename T> void printPoint(T& pt)
+template <typename T>
+void printPoint(T& pt)
 {
     for (auto i : pt.get())
     {

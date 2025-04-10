@@ -1,6 +1,8 @@
 #define CATCH_CONFIG_MAIN
 
-#include "../src/point.h"
+#include "../src/point2D.h"
+#include "../src/point3D.h"
+#include "../src/point3D4.h"
 #include <catch2/catch.hpp>
 #include <vector>
 
