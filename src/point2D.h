@@ -64,4 +64,10 @@ class Point2D
         {
             std::cout << "Point2D(" << x << ", " << y << ")\n";
         }
+
+        friend std::ostream& operator<<(std::ostream& os, const Point2D<T>& pt)
+        {
+            os << "Point2D(" << pt.x << ", " << pt.y << ")";
+            return os;
+        }
 };
