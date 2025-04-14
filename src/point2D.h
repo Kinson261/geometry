@@ -20,15 +20,15 @@ class Point2D
         ~Point2D() {}
 
         // Required for operator addable
-        Point2D<T> operator+=(const Point2D<T>& rhs)
+        Point2D<T>& operator+=(const Point2D<T>& rhs)
         {
             x += rhs.x;
             y += rhs.y;
             return *this;
         }
 
-        // Required for operator substractable
-        Point2D<T> operator-=(const Point2D<T>& rhs)
+        // Required for operator subtractable
+        Point2D<T>& operator-=(const Point2D<T>& rhs)
         {
             x -= rhs.x;
             y -= rhs.y;
