@@ -44,11 +44,6 @@ class Point3D4
             return *this;
         }
 
-        void print() const override
-        {
-            std::cout << "Point3D4(" << this->x << ", " << this->y << ", " << this->z << ", " << s << ")\n";
-        }
-
         void set(T x_val, T y_val, T z_val)
         {
             this->x = x_val;
@@ -73,5 +68,11 @@ class Point3D4
         T getS() const
         {
             return s;
+        }
+
+        friend std::ostream& operator<<(std::ostream& os, const Point3D4<T>& pt)
+        {
+            os << "Point3D4(" << pt.getX() << ", " << pt.getY() << ", " << pt.getZ() << ", " << pt.getS() << ")";
+            return os;
         }
 };

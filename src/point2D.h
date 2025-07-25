@@ -59,15 +59,9 @@ class Point2D
             y = y_val;
         }
 
-        // Virtual method to print the point
-        virtual void print() const
-        {
-            std::cout << "Point2D(" << x << ", " << y << ")\n";
-        }
-
         friend std::ostream& operator<<(std::ostream& os, const Point2D<T>& pt)
         {
-            os << "Point2D(" << pt.x << ", " << pt.y << ")";
+            os << "Point2D(" << pt.getX() << ", " << pt.getY() << ")";
             return os;
         }
 };

@@ -59,9 +59,9 @@ class Point3D
             z = z_val;
         }
 
-        // Override the print method to include z
-        void print() const override
+        friend std::ostream& operator<<(std::ostream& os, const Point3D<T>& pt)
         {
-            std::cout << "Point3D(" << this->x << ", " << this->y << ", " << z << ")\n";
+            os << "Point3D(" << pt.getX() << ", " << pt.getY() << ", " << pt.getZ() << ")";
+            return os;
         }
 };
