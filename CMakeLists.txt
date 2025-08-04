@@ -13,9 +13,7 @@ target_include_directories(MyLibrary PRIVATE src)
 
 
 find_package(Catch2 REQUIRED)
-
-add_executable(MyLibraryTest test/testPoint.cpp)
-target_link_libraries(MyLibraryTest PRIVATE Catch2::Catch2)
-
-enable_testing()
-add_test(NAME MyLibraryTest COMMAND MyLibraryTest)
+add_executable(AllTests test/testPoint2D.cpp test/testPoint3D.cpp test/testPoint3D4.cpp)
+add_executable(TestPoint2D test/testPoint2D.cpp)
+add_executable(TestPoint3D test/testPoint3D.cpp)
+add_executable(TestPoint3D4 test/testPoint3D4.cpp)
