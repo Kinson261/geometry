@@ -55,8 +55,8 @@ class Point2D
             return *this;
         }
 
-        // Required for operator addable
-        Point2D<T>& operator+=(const Point2D<T>& rhs)
+        // Required for operation addable
+        Point2D& operator+=(const Point2D& rhs)
         {
             x += rhs.x;
             y += rhs.y;
@@ -64,14 +64,26 @@ class Point2D
         }
 
         // Required for operator subtractable
-        Point2D<T>& operator-=(const Point2D<T>& rhs)
+        Point2D& operator-=(const Point2D& rhs)
         {
             x -= rhs.x;
             y -= rhs.y;
             return *this;
         }
 
-        // Getter methods for x and y
+        // required for operation equal
+        bool operator==(const Point2D& other)
+        {
+            
+            return (x == other.x && y == other.y);
+            // return (std::cmp_equal(x, other.x) && std::cmp_equal(y, other.y));
+        }
+
+        // required for operation not equal
+        bool operator!=(const Point2D& other)
+        {
+            return !(x == other.x && y == other.y);
+        }
         T getX() const
         {
             return x;
