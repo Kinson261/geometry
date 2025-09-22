@@ -19,7 +19,41 @@ class Point2D
         // Default destructor
         virtual ~Point2D() {}
 
-        ~Point2D() {}
+        // Copy constructor
+        Point2D(const Point2D& other) : x(other.x), y(other.y) {}
+
+        // Copy assignment
+        Point2D& operator=(const Point2D& other)
+        {
+            x = other.x;
+            y = other.y;
+            return *this;
+        }
+
+        // Move constructor
+        Point2D(Point2D&& other) noexcept
+        {
+            if (this != &other)
+            {
+                x = std::move(other.x);
+                y = std::move(other.y);
+                other.x = T {};
+                other.y = T {};
+            }
+        }
+
+        // Move assignment
+        Point2D& operator=(Point2D&& other) noexcept
+        {
+            if (this != &other)
+            {
+                x = std::move(other.x);
+                y = std::move(other.y);
+                other.x = T {};
+                other.y = T {};
+            }
+            return *this;
+        }
 
         // Required for operator addable
         Point2D<T>& operator+=(const Point2D<T>& rhs)
