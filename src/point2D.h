@@ -1,9 +1,10 @@
 #pragma once
 #include <boost/operators.hpp>
+#include <concepts>
 #include <iostream>
-#include <vector>
 
 template <typename T>
+requires std::integral<T> || std::floating_point<T>
 class Point2D
     : public boost::addable<Point2D<T>>
     , public boost::subtractable<Point2D<T>>
