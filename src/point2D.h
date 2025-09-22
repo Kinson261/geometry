@@ -84,20 +84,23 @@ class Point2D
         {
             return !(x == other.x && y == other.y);
         }
+
+        // Getter methods for x
         T getX() const
         {
             return x;
         }
 
+        // Getter methods for y
         T getY() const
         {
             return y;
         }
 
-        virtual std::vector<T> get() const
+        // Getter method for x and y
+        virtual std::array<T, 2> get() const
         {
-            std::vector<T> coord({x, y});
-            return coord;
+            return std::array<T,2> {x, y};
         }
 
         // Setter method
