@@ -12,10 +12,12 @@ class Point2D
         T x, y;
 
     public:
-        // Constructor to initialize x and y
+        // Default constructor
+        Point2D() : x(T {}), y(T {}) {}
         Point2D(T x_val, T y_val) : x(x_val), y(y_val) {}
 
-        Point2D() {}
+        // Default destructor
+        virtual ~Point2D() {}
 
         ~Point2D() {}
 
