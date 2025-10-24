@@ -5,7 +5,7 @@
 #include <print>
 
 template <typename T>
-requires std::integral<T> || std::floating_point<T>
+    requires std::integral<T> || std::floating_point<T>
 class Point2D
     : public boost::addable<Point2D<T>>
     , public boost::subtractable<Point2D<T>>
@@ -15,19 +15,33 @@ class Point2D
 
     public:
         // Default constructor
-        Point2D() : x(T {}), y(T {}) {std::clog << "Point2D created without initialization." << "\n";}
-        Point2D(T x_val, T y_val) : x(x_val), y(y_val) {std::print("Point2D created with value [{0}, {1}]\n", x_val, y_val);}
+        Point2D() : x(T {}), y(T {})
+        {
+            std::clog << "Point2D created without initialization." << "\n";
+        }
+
+        Point2D(T x_val, T y_val) : x(x_val), y(y_val)
+        {
+            std::print("Point2D created with value [{0}, {1}]\n", x_val, y_val);
+        }
 
         // Default destructor
-        virtual ~Point2D() {std::print("Point2D destroyed.\n");}
+        virtual ~Point2D()
+        {
+            std::print("Point2D destroyed.\n");
+        }
 
         // Copy constructor
-        Point2D(const Point2D& other) : x(other.x), y(other.y) {std::print("Point2D is copied.\n");}
+        Point2D(const Point2D& other) : x(other.x), y(other.y)
+        {
+            std::print("Point2D is copied.\n");
+        }
 
         // Copy assignment
         Point2D& operator=(const Point2D& other)
         {
-            if (this != other) {
+            if (this != other)
+            {
                 x = other.x;
                 y = other.y;
                 std::print("Point2D is copied by assignment.\n");
@@ -81,7 +95,6 @@ class Point2D
         // required for operation equal
         bool operator==(const Point2D& other)
         {
-            
             return (x == other.x && y == other.y);
         }
 
@@ -94,7 +107,7 @@ class Point2D
         // Getter method for x and y
         std::array<T, 2> get() const
         {
-            return std::array<T,2> {x, y};
+            return std::array<T, 2> {x, y};
         }
 
         // Setter method

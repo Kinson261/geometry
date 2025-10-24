@@ -18,17 +18,32 @@ class Point3D4
 
     public:
         // default constructor
-        Point3D4() : Point3D<T>(), s(T {1}) {std::print("Point3D4 created without initialization.\n");}
-        Point3D4(T x_val, T y_val, T z_val) : Point3D<T>(x_val, y_val, z_val), s(T {1}) {std::print("Point3D4 created with value [{0}, {1}, {2}, {3}].\n", x_val,y_val, z_val, s);}
-        Point3D4(T x_val, T y_val, T z_val, T s_val) : Point3D<T>(x_val, y_val, z_val), s(s_val) {std::print("Point3D4 created with value [{0}, {1}, {2}, {3}].\n", x_val,y_val, z_val, s_val);}
+        Point3D4() : Point3D<T>(), s(T {1})
+        {
+            std::print("Point3D4 created without initialization.\n");
+        }
+
+        Point3D4(T x_val, T y_val, T z_val) : Point3D<T>(x_val, y_val, z_val), s(T {1})
+        {
+            std::print("Point3D4 created with value [{0}, {1}, {2}, {3}].\n", x_val, y_val, z_val, s);
+        }
+
+        Point3D4(T x_val, T y_val, T z_val, T s_val) : Point3D<T>(x_val, y_val, z_val), s(s_val)
+        {
+            std::print("Point3D4 created with value [{0}, {1}, {2}, {3}].\n", x_val, y_val, z_val, s_val);
+        }
 
         // default destructor
-        ~Point3D4() {std::print("Point3D4 is destroyed\n");}
+        ~Point3D4()
+        {
+            std::print("Point3D4 is destroyed\n");
+        }
 
         // Copy constructor
         Point3D4(const Point3D4& other)
         {
-            if (this != &other) {
+            if (this != &other)
+            {
                 this->x = other.x;
                 this->y = other.y;
                 this->z = other.z;
@@ -51,14 +66,14 @@ class Point3D4
                 other.z = T {};
                 s = T {};
                 std::print("Point3D4 is moved\n");
-
             }
         }
 
         // Copy assigment
         Point3D4& operator=(const Point3D4& other)
         {
-            if (this != &other) {
+            if (this != &other)
+            {
                 this->x = other.x;
                 this->y = other.y;
                 this->z = other.z;
@@ -136,23 +151,26 @@ class Point3D4
 
         void set(std::string axis, T value)
         {
-            std::for_each(axis.begin(), axis.end(),
-                          [](char& c) { c = std::tolower(c); }
-                          );
-            
-            if (axis == "x") {
+            std::for_each(axis.begin(), axis.end(), [](char& c) { c = std::tolower(c); });
+
+            if (axis == "x")
+            {
                 this->x = value;
             }
-            else if (axis == "y") {
+            else if (axis == "y")
+            {
                 this->y = value;
             }
-            else if (axis == "z") {
+            else if (axis == "z")
+            {
                 this->z = value;
             }
-            else if (axis == "s") {
+            else if (axis == "s")
+            {
                 s = value;
             }
-            else {
+            else
+            {
                 throw std::invalid_argument("Invalid argument. Argument must be either `x`, `y`, `z` or `s`");
             }
         }
