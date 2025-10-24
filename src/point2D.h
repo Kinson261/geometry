@@ -27,9 +27,11 @@ class Point2D
         // Copy assignment
         Point2D& operator=(const Point2D& other)
         {
-            x = other.x;
-            y = other.y;
-            std::print("Point2D is copied by assignment.\n");
+            if (this != other) {
+                x = other.x;
+                y = other.y;
+                std::print("Point2D is copied by assignment.\n");
+            }
             return *this;
         }
 
@@ -81,7 +83,6 @@ class Point2D
         {
             
             return (x == other.x && y == other.y);
-            // return (std::cmp_equal(x, other.x) && std::cmp_equal(y, other.y));
         }
 
         // required for operation not equal
@@ -97,7 +98,7 @@ class Point2D
         }
 
         // Setter method
-        virtual void set(T x_val, T y_val)
+        void set(T x_val, T y_val)
         {
             x = x_val;
             y = y_val;
