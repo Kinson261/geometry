@@ -2,6 +2,7 @@
 #include <boost/operators.hpp>
 #include <concepts>
 #include <iostream>
+#include <print>
 
 template <typename T>
 requires std::integral<T> || std::floating_point<T>
@@ -14,20 +15,21 @@ class Point2D
 
     public:
         // Default constructor
-        Point2D() : x(T {}), y(T {}) {}
-        Point2D(T x_val, T y_val) : x(x_val), y(y_val) {}
+        Point2D() : x(T {}), y(T {}) {std::clog << "Point2D created without initialization." << "\n";}
+        Point2D(T x_val, T y_val) : x(x_val), y(y_val) {std::print("Point2D created with value [{0}, {1}]\n", x_val, y_val);}
 
         // Default destructor
-        virtual ~Point2D() {}
+        virtual ~Point2D() {std::print("Point2D destroyed.\n");}
 
         // Copy constructor
-        Point2D(const Point2D& other) : x(other.x), y(other.y) {}
+        Point2D(const Point2D& other) : x(other.x), y(other.y) {std::print("Point2D is copied.\n");}
 
         // Copy assignment
         Point2D& operator=(const Point2D& other)
         {
             x = other.x;
             y = other.y;
+            std::print("Point2D is copied by assignment.\n");
             return *this;
         }
 
@@ -40,6 +42,7 @@ class Point2D
                 y = std::move(other.y);
                 other.x = T {};
                 other.y = T {};
+                std::print("Point2D is moved.\n");
             }
         }
 
@@ -52,6 +55,7 @@ class Point2D
                 y = std::move(other.y);
                 other.x = T {};
                 other.y = T {};
+                std::print("Point2D is moved by assignment.\n");
             }
             return *this;
         }
