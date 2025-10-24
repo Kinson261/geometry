@@ -90,20 +90,8 @@ class Point2D
             return !(x == other.x && y == other.y);
         }
 
-        // Getter methods for x
-        T getX() const
-        {
-            return x;
-        }
-
-        // Getter methods for y
-        T getY() const
-        {
-            return y;
-        }
-
         // Getter method for x and y
-        virtual std::array<T, 2> get() const
+        std::array<T, 2> get() const
         {
             return std::array<T,2> {x, y};
         }
@@ -117,7 +105,7 @@ class Point2D
 
         friend std::ostream& operator<<(std::ostream& os, const Point2D<T>& pt)
         {
-            os << "Point2D(" << pt.getX() << ", " << pt.getY() << ")";
+            os << "Point2D(" << pt.get().at(0) << ", " << pt.get().at(1) << ")";
             return os;
         }
 };
