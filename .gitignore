@@ -1,5 +1,6 @@
 # Ignore cmake build files
 build/
+build-cmake/
 CMakeCache.txt
 CMakeFiles
 CMakeOutput.log
@@ -26,3 +27,7 @@ local_config.h
 
 # Ignore cache
 .cache/
+
+# Draft
+practice_algo.cpp
+rangesd.cpp 
