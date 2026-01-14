@@ -1,8 +1,11 @@
 #pragma once
 #include <boost/operators.hpp>
 #include <concepts>
+#include <format>
 #include <iostream>
+#include <ostream>
 #include <print>
+#include "axis.h"
 
 template <typename T>
     requires std::integral<T> || std::floating_point<T>
@@ -117,9 +120,26 @@ class Point2D
             y = y_val;
         }
 
+        virtual void set(const Axis axis, const T value)
+        {
+            switch (axis)
+            {
+                case Axis::X:
+                    this->x = value;
+                    break;
+                case Axis::Y:
+                    y = value;
+                    break;
+                default:
+                    throw std::invalid_argument("Invalid axis");
+            }
+        }
+
         friend std::ostream& operator<<(std::ostream& os, const Point2D<T>& pt)
         {
             os << "Point2D(" << pt.get().at(0) << ", " << pt.get().at(1) << ")";
             return os;
         }
+
+        // TODO: Add support for std::print() in c++23
 };

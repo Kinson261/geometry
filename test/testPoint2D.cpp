@@ -1,4 +1,5 @@
 #include <array>
+#include <stdexcept>
 #define CATCH_CONFIG_MAIN
 #include "../src/point2D.h"
 #include <catch2/catch.hpp>
@@ -111,6 +112,63 @@ TEST_CASE("Copy constructor and assignment of Point2D", "[Copy constructor]")
         REQUIRE(point2Ddouble2.get() == std::array<double, 2> {x_double, y_double});
         REQUIRE(point2Ddouble3.get() == std::array<double, 2> {x_double, y_double});
         REQUIRE(point2Ddouble4.get() == std::array<double, 2> {x_double, y_double});
+    }
+}
+
+TEST_CASE("Set function is being tested", "[Set]")
+{
+    SECTION("Set <int> value for Point2D")
+    {
+        Point2D<int> pt1;
+        SECTION("Arguments are values")
+        {
+            pt1.set(32, 43);
+            REQUIRE(pt1.get() == std::array<int, 2> {32,43});
+        }
+        SECTION("With axis")
+        {
+            pt1.set(Axis::X, 17);
+            pt1.set(Axis::Y, 13);
+            REQUIRE(pt1.get() == std::array<int,2> {17, 13});
+            REQUIRE_THROWS_AS(pt1.set(Axis::Z, 54), std::invalid_argument);
+            REQUIRE_THROWS_AS(pt1.set(Axis::S, 54), std::invalid_argument);
+        }
+    }
+
+    SECTION("Set <float> value for Point2D")
+    {
+        Point2D<float> pt1;
+        SECTION("Arguments are values")
+        {
+            pt1.set(32.0F, 43.0F);
+            REQUIRE(pt1.get() == std::array<float, 2> {32, 43});
+        }
+        SECTION("With axis")
+        {
+            pt1.set(Axis::X, 17.0F);
+            pt1.set(Axis::Y, 13.0F);
+            REQUIRE(pt1.get() == std::array<float, 2> {17, 13});
+            REQUIRE_THROWS_AS(pt1.set(Axis::Z, 54), std::invalid_argument);
+            REQUIRE_THROWS_AS(pt1.set(Axis::S, 54), std::invalid_argument);
+        }
+    }
+
+    SECTION("Set <double> value for Point2D")
+    {
+        Point2D<double> pt1;
+        SECTION("Arguments are values")
+        {
+            pt1.set(32.0, 43.0);
+            REQUIRE(pt1.get() == std::array<double, 2> {32, 43});
+        }
+        SECTION("With axis")
+        {
+            pt1.set(Axis::X, 17.0F);
+            pt1.set(Axis::Y, 13.0F);
+            REQUIRE(pt1.get() == std::array<double, 2> {17, 13});
+            REQUIRE_THROWS_AS(pt1.set(Axis::Z, 54), std::invalid_argument);
+            REQUIRE_THROWS_AS(pt1.set(Axis::S, 54), std::invalid_argument);
+        }
     }
 }
 

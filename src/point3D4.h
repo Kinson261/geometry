@@ -1,11 +1,11 @@
 #pragma once
+#include "axis.h"
 #include "point3D.h"
 #include <algorithm>
 #include <boost/operators.hpp>
 #include <iostream>
 #include <ostream>
 #include <stdexcept>
-#include <string>
 
 template <typename T>
 class Point3D4
@@ -149,29 +149,24 @@ class Point3D4
             s = s_val;
         }
 
-        void set(std::string axis, T value)
+        void set(const Axis axis, const T value) override
         {
-            std::for_each(axis.begin(), axis.end(), [](char& c) { c = std::tolower(c); });
-
-            if (axis == "x")
+            switch (axis)
             {
-                this->x = value;
-            }
-            else if (axis == "y")
-            {
-                this->y = value;
-            }
-            else if (axis == "z")
-            {
-                this->z = value;
-            }
-            else if (axis == "s")
-            {
-                s = value;
-            }
-            else
-            {
-                throw std::invalid_argument("Invalid argument. Argument must be either `x`, `y`, `z` or `s`");
+                case Axis::X:
+                    this->x = value;
+                    break;
+                case Axis::Y:
+                    this->y = value;
+                    break;
+                case Axis::Z:
+                    this->z = value;
+                    break;
+                case Axis::S:
+                    s = value;
+                    break;
+                default:
+                    throw std::invalid_argument("Invalid axis");
             }
         }
 
@@ -185,4 +180,6 @@ class Point3D4
             os << "Point3D4(" << pt.get().at(0) << ", " << pt.get().at(1) << ", " << pt.get().at(2) << ", " << pt.get().at(3) << ")";
             return os;
         }
+
+        // TODO: Add support for std::print() in c++23
 };

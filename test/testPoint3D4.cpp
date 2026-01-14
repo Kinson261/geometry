@@ -201,6 +201,63 @@ TEST_CASE("Poind 3D4 arithmetic functions are checked", "[Point3D4 arithmetic]")
     REQUIRE_THROWS(pd5 - pd6);
 }
 
+TEST_CASE("Set function is being tested", "[Set]")
+{
+    SECTION("Set <int> value for Point3D4")
+    {
+        Point3D4<int> pt1;
+        SECTION("Arguments are values")
+        {
+            pt1.set(32, 43, 3, 5);
+            REQUIRE(pt1.get() == std::array<int, 4> {32, 43, 3, 5});
+        }
+        SECTION("With axis")
+        {
+            pt1.set(Axis::X, 17);
+            pt1.set(Axis::Y, 13);
+            pt1.set(Axis::Z, 15);
+            pt1.set(Axis::S, 19);
+            REQUIRE(pt1.get() == std::array<int, 4> {17, 13, 15, 19});
+        }
+    }
+
+    SECTION("Set <float> value for Point3D4")
+    {
+        Point3D4<float> pt1;
+        SECTION("Arguments are values")
+        {
+            pt1.set(32.0F, 43.0F, 2.0F, 3);
+            REQUIRE(pt1.get() == std::array<float, 4> {32, 43, 2, 3});
+        }
+        SECTION("With axis")
+        {
+            pt1.set(Axis::X, 17.0F);
+            pt1.set(Axis::Y, 13.0F);
+            pt1.set(Axis::Z, 3.0F);
+            pt1.set(Axis::S, 2.0F);
+            REQUIRE(pt1.get() == std::array<float, 4> {17, 13, 3, 2});
+        }
+    }
+
+    SECTION("Set <double> value for Point3D4")
+    {
+        Point3D4<double> pt1;
+        SECTION("Arguments are values")
+        {
+            pt1.set(32., 43., 8., 2);
+            REQUIRE(pt1.get() == std::array<double, 4> {32, 43, 8, 2});
+        }
+        SECTION("With axis")
+        {
+            pt1.set(Axis::X, 17.);
+            pt1.set(Axis::Y, 13.);
+            pt1.set(Axis::Z, 82.);
+            pt1.set(Axis::S, 4.);
+            REQUIRE(pt1.get() == std::array<double, 4> {17, 13, 82, 4});
+        }
+    }
+}
+
 TEST_CASE("Point3D4 equality check is tested", "[Point3D4 equality]")
 {
     Point3D4<int> pt1 {23, 45, 67};
@@ -253,38 +310,4 @@ TEST_CASE("Point3D4 equality check is tested", "[Point3D4 equality]")
     REQUIRE(pt2sw.get().at(1) == pt3sw.get().at(1));
     REQUIRE(pt2sw.get().at(2) == pt3sw.get().at(2));
     REQUIRE(pt2sw.get().at(3) != pt3sw.get().at(3));
-}
-
-TEST_CASE("Point3D4 set() function are tested ", "[Point3D4 set()]")
-{
-    Point3D4<int> pt1 {493, 9392, 482392};
-    pt1.set("x", 34);
-    pt1.set("y", 3);
-    pt1.set("z", 4);
-    pt1.set("s", 5);
-    REQUIRE(pt1.get().at(0) == 34);
-    REQUIRE(pt1.get().at(1) == 3);
-    REQUIRE(pt1.get().at(2) == 4);
-    REQUIRE(pt1.get().at(3) == 5);
-
-    pt1.set("X", 36);
-    pt1.set("Y", 37);
-    pt1.set("Z", 48);
-    pt1.set("S", 6);
-    REQUIRE(pt1.get().at(0) == 36);
-    REQUIRE(pt1.get().at(1) == 37);
-    REQUIRE(pt1.get().at(2) == 48);
-    REQUIRE(pt1.get().at(3) == 6);
-
-    REQUIRE_THROWS(pt1.set("a", 10));
-    REQUIRE_THROWS(pt1.set("b", 20));
-    REQUIRE_THROWS(pt1.set("c", 30));
-
-    REQUIRE_THROWS(pt1.set("A", 1));
-    REQUIRE_THROWS(pt1.set("B", 2));
-    REQUIRE_THROWS(pt1.set("C", 3));
-
-    REQUIRE_THROWS(pt1.set("AWERT", 1));
-    REQUIRE_THROWS(pt1.set("BDFG", 2));
-    REQUIRE_THROWS(pt1.set("CGH", 3));
 }
