@@ -2,10 +2,9 @@
 #define CATCH_CONFIG_MAIN
 #include <array>
 #include <catch2/catch.hpp>
-#include <string>
 #include <sys/types.h>
 
-TEST_CASE("Point3D are created", "[Point3D]")
+TEST_CASE("Point3D are created", "[Defaut Constructor]")
 {
     REQUIRE_NOTHROW(Point3D<int> {});
     REQUIRE_NOTHROW(Point3D<short int> {});
@@ -16,39 +15,107 @@ TEST_CASE("Point3D are created", "[Point3D]")
     REQUIRE_NOTHROW(Point3D<long double> {});
     REQUIRE_NOTHROW(Point3D<uint> {});
 
-    REQUIRE_NOTHROW(Point3D<int> {23, 34, 43});
-    REQUIRE_NOTHROW(Point3D<float>(23.4, 4.3, .531));
-    REQUIRE_NOTHROW(Point3D<double>(23.4, 4, .531));
-}
-
-TEST_CASE("Point3D values are checked", "[Point3D values]")
-{
     int x_int {34};
     int y_int {12};
-    int z_int {65};
+    int z_int {1};
+    float x_float {34.0F};
+    float y_float {12.0F};
+    float z_float {1.0F};
+    double x_double {34.0};
+    double y_double {12.0};
+    double z_double {1.0};
 
-    float x_float {34.45};
-    float y_float {12.34};
-    float z_float {23.43};
+    SECTION("Point3D<int> are created")
+    {
+        REQUIRE_NOTHROW(Point3D<int> {x_int, y_int, z_int});
+        REQUIRE_NOTHROW(Point3D<int> {2, 3,5});
+        REQUIRE_NOTHROW(Point3D {x_int, y_int, z_int});
+        REQUIRE_NOTHROW(Point3D {2, 3, 5});
+    }
 
-    double x_double {23.34};
-    double y_double {328};
-    double z_double {98.3};
+    SECTION("Point3D<float> are created")
+    {
+        REQUIRE_NOTHROW(Point3D<float> {x_float, y_float, z_float});
+        REQUIRE_NOTHROW(Point3D<float> {4.F, 0.5F, 1.0F});
+        REQUIRE_NOTHROW(Point3D {x_float, y_float,z_float});
+        REQUIRE_NOTHROW(Point3D {4.F, 0.5F, 1.0F});
+    }
 
-    Point3D point3Dint(x_int, y_int, z_int);
-    REQUIRE(point3Dint.get().at(0) == 34);
-    REQUIRE(point3Dint.get().at(1) == 12);
-    REQUIRE(point3Dint.get().at(2) == 65);
+    SECTION("Point3D<double> are created")
+    {
+        REQUIRE_NOTHROW(Point3D<double> {x_double, y_double, z_float});
+        REQUIRE_NOTHROW(Point3D<double> {4., 0., 2.});
+        REQUIRE_NOTHROW(Point3D {x_double, y_double, z_double});
+        REQUIRE_NOTHROW(Point3D {4., 0., 2.});
+    }
+}
 
-    Point3D<float> point3Dfloat(x_float, y_float, z_float);
-    REQUIRE(point3Dfloat.get().at(0) == 34.45f);
-    REQUIRE(point3Dfloat.get().at(1) == 12.34f);
-    REQUIRE(point3Dfloat.get().at(2) == 23.43f);
+TEST_CASE("Copy constructor and assignment of Point3D", "[Copy constructor]")
+{
+    SECTION("Point3D<int> are copied using copy constructor and copy assignment")
+    {
+        int x_int = 31;
+        int y_int = 32;
+        int z_int = 33;
+        Point3D point3D1 {x_int, y_int, z_int};
+        Point3D<int> point3D2;
 
-    Point3D<double> point3Ddouble(x_double, y_double, z_double);
-    REQUIRE(point3Ddouble.get().at(0) == 23.34);
-    REQUIRE(point3Ddouble.get().at(1) == 328);
-    REQUIRE(point3Ddouble.get().at(2) == 98.3);
+        REQUIRE_NOTHROW(point3D2 == point3D1);
+        REQUIRE_NOTHROW(point3D2 == point3D2);
+        REQUIRE_NOTHROW(Point3D<int> (point3D1));
+        REQUIRE_NOTHROW(Point3D<int> {point3D1});
+
+        point3D2 = point3D1;
+        Point3D point3D3 (point3D1);
+        Point3D point3D4 {point3D1};
+
+        REQUIRE(point3D2.get() == std::array<int, 3> {x_int, y_int, z_int});
+        REQUIRE(point3D3.get() == std::array<int, 3> {x_int, y_int, z_int});
+        REQUIRE(point3D4.get() == std::array<int, 3> {x_int, y_int, z_int});
+    }
+
+
+    SECTION("Point3D<float> are copied using copy constructor and copy assignment")
+    {
+        float x_float = 31.0F;
+        float y_float = 32.0F;
+        float z_float = 33.0F;
+        Point3D point3D1 {x_float, y_float, z_float};
+        Point3D<float> point3D2;
+
+        REQUIRE_NOTHROW(point3D2 = point3D1);
+        REQUIRE_NOTHROW(point3D2 = point3D2);
+        REQUIRE_NOTHROW(Point3D<float> (point3D1));
+        REQUIRE_NOTHROW(Point3D<float> {point3D1});
+
+        point3D2 = point3D1;
+        Point3D point3D3 (point3D1);
+        Point3D point3D4 {point3D1};
+        REQUIRE(point3D2.get() == std::array<float, 3> {x_float, y_float, z_float});
+        REQUIRE(point3D3.get() == std::array<float, 3> {x_float, y_float, z_float});
+        REQUIRE(point3D4.get() == std::array<float, 3> {x_float, y_float, z_float});
+    }
+
+    SECTION("Point3D<double> are copied using copy constructor and copy assignment")
+    {
+        double x_double = 31.;
+        double y_double = 32.;
+        double z_double = 33.;
+        Point3D point3D1 {x_double, y_double, z_double};
+        Point3D<double> point3D2;
+
+        REQUIRE_NOTHROW(point3D2 = point3D1);
+        REQUIRE_NOTHROW(point3D2 = point3D2);
+        REQUIRE_NOTHROW(Point3D<double> (point3D1));
+        REQUIRE_NOTHROW(Point3D<double> {point3D1});
+
+        point3D2 = point3D1;
+        Point3D point3D3 (point3D1);
+        Point3D point3D4 {point3D1};
+        REQUIRE(point3D2.get() == std::array<double, 3> {x_double, y_double, z_double});
+        REQUIRE(point3D3.get() == std::array<double, 3> {x_double, y_double, z_double});
+        REQUIRE(point3D4.get() == std::array<double, 3> {x_double, y_double, z_double});
+    }
 }
 
 TEST_CASE("Poind 3D arithmetic functions are checked", "[Point3D arithmetic]")
