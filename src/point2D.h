@@ -40,7 +40,7 @@ class Point2D
         // Copy assignment
         Point2D& operator=(const Point2D& other)
         {
-            if (this != other)
+            if (this != &other)
             {
                 x = other.x;
                 y = other.y;
