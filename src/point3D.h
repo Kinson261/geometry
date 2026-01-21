@@ -2,16 +2,15 @@
 #include "axis.h"
 #include "point2D.h"
 #include <algorithm>
-#include <boost/operators.hpp>
+#include <array>
+#include <concepts>
 #include <iostream>
 #include <print>
 #include <stdexcept>
+#include <type_traits>
 
 template <typename T>
-class Point3D
-    : public Point2D<T>
-    , public boost::addable<Point3D<T>>
-    , public boost::subtractable<Point3D<T>>
+class Point3D : public Point2D<T>
 {
     protected:
         T z;
@@ -61,7 +60,7 @@ class Point3D
             }
         }
 
-        // Copy assigment
+        // Copy assignment
         Point3D& operator=(const Point3D& other)
         {
             if (this != &other)
@@ -90,6 +89,60 @@ class Point3D
             return *this;
         }
 
+        template <typename U>
+            requires std::integral<U> || std::floating_point<U>
+        auto operator+(const Point3D<U>& other) const
+        {
+            std::array<U, 3> pt2 = other.get();
+            using ResultType = std::common_type_t<T, U>;
+            return Point3D<ResultType> {
+                this->x + pt2.at(0),
+                this->y + pt2.at(1),
+                this->z + pt2.at(2),
+            };
+        }
+
+        template <typename U>
+            requires std::integral<U> || std::floating_point<U>
+        auto operator-(const Point3D<U>& other) const
+        {
+            std::array<U, 3> pt2 = other.get();
+            using ResultType = std::common_type_t<T, U>;
+            return Point3D<ResultType> {
+                this->x - pt2.at(0),
+                this->y - pt2.at(1),
+                this->z - pt2.at(2),
+            };
+        }
+
+        template <typename U>
+            requires std::integral<U> || std::floating_point<U>
+        auto operator*(const U& scalar) const
+        {
+            using ResultType = decltype(this->x * scalar);
+
+            return Point3D<ResultType> {
+                this->x * scalar,
+                this->y * scalar,
+                this->z * scalar,
+            };
+        }
+
+        template <typename U>
+            requires std::integral<U> || std::floating_point<U>
+        auto operator/(const U& scalar) const
+        {
+            if (scalar == 0 ){
+                throw std::invalid_argument("Cannot divide by 0.");
+            }
+            using ResultType = decltype(this->x / scalar);
+            return Point3D<ResultType> {
+                this->x / scalar,
+                this->y / scalar,
+                this->z / scalar,
+            };
+        }
+
         // Required for operator addable
         Point3D& operator+=(const Point3D& rhs)
         {
@@ -99,7 +152,7 @@ class Point3D
             return *this;
         }
 
-        // Required for operator substractable
+        // Required for operator subtractable
         Point3D& operator-=(const Point3D<T>& rhs)
         {
             this->x -= rhs.x;

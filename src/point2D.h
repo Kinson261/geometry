@@ -1,17 +1,20 @@
 #pragma once
-#include <boost/operators.hpp>
+#include "axis.h"
+#include <algorithm>
+#include <array>
+#include <cassert>
 #include <concepts>
 #include <format>
 #include <iostream>
 #include <ostream>
 #include <print>
-#include "axis.h"
+#include <stdexcept>
+#include <type_traits>
+#include <vector>
 
 template <typename T>
     requires std::integral<T> || std::floating_point<T>
 class Point2D
-    : public boost::addable<Point2D<T>>
-    , public boost::subtractable<Point2D<T>>
 {
     protected:
         T x, y;
@@ -79,11 +82,65 @@ class Point2D
             return *this;
         }
 
-        // Required for operation addable
-        Point2D& operator+=(const Point2D& rhs)
+        template <typename U>
+            requires std::integral<U> || std::floating_point<U>
+        auto operator+(const Point2D<U>& other) const
         {
-            x += rhs.x;
-            y += rhs.y;
+            std::array<U, 2> pt2 = other.get();
+            using ResultType = std::common_type_t<T, U>;
+            return Point2D<ResultType> {
+                x + pt2.at(0),
+                y + pt2.at(1),
+            };
+        }
+
+        template <typename U>
+            requires std::integral<U> || std::floating_point<U>
+        auto operator-(const Point2D<U>& other) const
+        {
+            std::array<U, 2> pt2 = other.get();
+            using ResultType = std::common_type_t<T, U>;
+            return Point2D<ResultType> {
+                x - pt2.at(0),
+                y - pt2.at(1),
+            };
+        }
+
+        template <typename U>
+            requires std::integral<U> || std::floating_point<U>
+        auto operator*(const U& scalar) const
+        {
+            using ResultType = decltype(this->x * scalar);
+            return Point2D<ResultType> {
+                x * scalar,
+                y * scalar,
+            };
+        }
+
+        template <typename U>
+            requires std::integral<U> || std::floating_point<U>
+        auto operator/(const U& scalar) const
+        {
+            if(scalar==0){
+                throw std::invalid_argument("Cannot divide by 0.");
+            }
+            using ResultType = decltype(this->x / scalar);
+            return Point2D<ResultType> {
+                x / scalar,
+                y / scalar,
+            };
+        }
+
+        template <typename U>
+        Point2D& operator=(const Point2D<U>& other)
+        {
+            x = static_cast<T>(other.get().at(0));
+            y = static_cast<T>(other.get().at(1));
+            std::print("Point2D is copied by assignment from another type.\n");
+            return *this;
+        }
+
+
             return *this;
         }
 
