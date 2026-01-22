@@ -1,7 +1,6 @@
 #include "../src/point3D4.h"
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
-#include <sys/types.h>
 
 TEST_CASE("Point3D4 are created", "[Default Constructor]")
 {
@@ -310,4 +309,54 @@ TEST_CASE("Point3D4 equality check is tested", "[Point3D4 equality]")
     REQUIRE(pt2sw.get().at(1) == pt3sw.get().at(1));
     REQUIRE(pt2sw.get().at(2) == pt3sw.get().at(2));
     REQUIRE(pt2sw.get().at(3) != pt3sw.get().at(3));
+}
+
+TEST_CASE("Arithmetic operations", "[Point3D4]")
+{
+    Point3D4<int> pt1 {2, 3, 4};
+    Point3D4<float> pt2 {3.F, 4.F, 5.F};
+    Point3D4<double> pt3 {8., 9., 10.};
+
+    SECTION("Addition")
+    {
+        REQUIRE_NOTHROW(Point3D4(pt1 + pt2));
+        REQUIRE_NOTHROW(Point3D4(pt1 + pt3));
+        REQUIRE_NOTHROW(Point3D4(pt2 + pt3));
+        REQUIRE(Point3D4(pt1 + pt2).get() == std::array<float, 4> {5, 7, 9, 1});
+        REQUIRE(Point3D4(pt1 + pt3).get() == std::array<double, 4> {10, 12, 14, 1});
+        REQUIRE(Point3D4(pt2 + pt3).get() == std::array<double, 4> {11, 13, 15, 1});
+    }
+
+    SECTION("Subtraction")
+    {
+        REQUIRE_NOTHROW(Point3D4(pt1 - pt2));
+        REQUIRE_NOTHROW(Point3D4(pt1 - pt3));
+        REQUIRE_NOTHROW(Point3D4(pt2 - pt3));
+        REQUIRE(Point3D4(pt1 - pt2).get() == std::array<float, 4> {-1, -1, -1, 1});
+        REQUIRE(Point3D4(pt1 - pt3).get() == std::array<double, 4> {-6, -6, -6, 1});
+        REQUIRE(Point3D4(pt2 - pt3).get() == std::array<double, 4> {-5, -5, -5, 1});
+    }
+
+    SECTION("Multiplication")
+    {
+        REQUIRE_NOTHROW(Point3D4(pt1 * 10));
+        REQUIRE_NOTHROW(Point3D4(pt1 * 10));
+        REQUIRE_NOTHROW(Point3D4(pt2 * 10));
+        REQUIRE(Point3D4(pt1 * 3).get() == std::array<int, 4> {6, 9, 12, 1});
+        REQUIRE(Point3D4(pt2 * 3).get() == std::array<float, 4> {9, 12, 15, 1});
+        REQUIRE(Point3D4(pt3 * 3).get() == std::array<double, 4> {24, 27, 30, 1});
+    }
+
+    SECTION("Division")
+    {
+        REQUIRE_THROWS(Point3D4(pt1/0));
+        REQUIRE_THROWS(Point3D4(pt2/0));
+        REQUIRE_THROWS(Point3D4(pt3/0));
+        REQUIRE_NOTHROW(Point3D4(pt1 / 10));
+        REQUIRE_NOTHROW(Point3D4(pt1 / 10));
+        REQUIRE_NOTHROW(Point3D4(pt2 / 10));
+        REQUIRE(Point3D4(pt1 / 3).get() == std::array<int, 4> {2/3, 3/3, 4/3, 1});
+        REQUIRE(Point3D4(pt2 / 3).get() == std::array<float, 4> {3./3, 4./3, 5./3, 1});
+        REQUIRE(Point3D4(pt3 / 3).get() == std::array<double, 4> {8./3, 9./3, 10./3, 1});
+    }
 }

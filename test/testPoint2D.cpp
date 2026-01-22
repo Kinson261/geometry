@@ -58,12 +58,12 @@ TEST_CASE("Copy constructor and assignment of Point2D", "[Copy constructor]")
         int y_int = 32;
         Point2D point2Dint1 {x_int, y_int};
         Point2D<int> point2Dint2;
-    
+
         REQUIRE_NOTHROW(point2Dint2 == point2Dint1);
         REQUIRE_NOTHROW(point2Dint2 == point2Dint2);
-        REQUIRE_NOTHROW(Point2D<int> (point2Dint1));
+        REQUIRE_NOTHROW(Point2D<int>(point2Dint1));
         REQUIRE_NOTHROW(Point2D<int> {point2Dint1});
-    
+
         point2Dint2 = point2Dint1;
         Point2D point2Dint3(point2Dint1);
         Point2D point2Dint4 {point2Dint1};
@@ -80,12 +80,12 @@ TEST_CASE("Copy constructor and assignment of Point2D", "[Copy constructor]")
         float y_float = 32.0F;
         Point2D point2Dfloat1 {x_float, y_float};
         Point2D<float> point2Dfloat2;
-        
+
         REQUIRE_NOTHROW(point2Dfloat2 = point2Dfloat1);
         REQUIRE_NOTHROW(point2Dfloat2 = point2Dfloat2);
         REQUIRE_NOTHROW(Point2D<float>(point2Dfloat1));
         REQUIRE_NOTHROW(Point2D<float> {point2Dfloat1});
-        
+
         point2Dfloat2 = point2Dfloat1;
         Point2D point2Dfloat3(point2Dfloat1);
         Point2D point2Dfloat4 {point2Dfloat1};
@@ -100,12 +100,12 @@ TEST_CASE("Copy constructor and assignment of Point2D", "[Copy constructor]")
         double y_double = 32.;
         Point2D point2Ddouble1 {x_double, y_double};
         Point2D<double> point2Ddouble2;
-        
+
         REQUIRE_NOTHROW(point2Ddouble2 = point2Ddouble1);
         REQUIRE_NOTHROW(point2Ddouble2 = point2Ddouble2);
         REQUIRE_NOTHROW(Point2D<double>(point2Ddouble1));
         REQUIRE_NOTHROW(Point2D<double> {point2Ddouble1});
-        
+
         point2Ddouble2 = point2Ddouble1;
         Point2D point2Ddouble3(point2Ddouble1);
         Point2D point2Ddouble4 {point2Ddouble1};
@@ -123,13 +123,13 @@ TEST_CASE("Set function is being tested", "[Set]")
         SECTION("Arguments are values")
         {
             pt1.set(32, 43);
-            REQUIRE(pt1.get() == std::array<int, 2> {32,43});
+            REQUIRE(pt1.get() == std::array<int, 2> {32, 43});
         }
         SECTION("With axis")
         {
             pt1.set(Axis::X, 17);
             pt1.set(Axis::Y, 13);
-            REQUIRE(pt1.get() == std::array<int,2> {17, 13});
+            REQUIRE(pt1.get() == std::array<int, 2> {17, 13});
             REQUIRE_THROWS_AS(pt1.set(Axis::Z, 54), std::invalid_argument);
             REQUIRE_THROWS_AS(pt1.set(Axis::S, 54), std::invalid_argument);
         }
@@ -181,8 +181,52 @@ TEST_CASE("Equality operator with different types of data", "[Point2D]")
 
 TEST_CASE("Arithmetic operations", "[Point2D]")
 {
-    Point2D<int> p1(5, 10);
-    Point2D<int> p2(3, 4);
+    Point2D<int> pt1 {2, 3};
+    Point2D<float> pt2 {3.F, 4.F};
+    Point2D<double> pt3 {8., 9.};
+
+    SECTION("Addition")
+    {
+        REQUIRE_NOTHROW(Point2D(pt1 + pt2));
+        REQUIRE_NOTHROW(Point2D(pt1 + pt3));
+        REQUIRE_NOTHROW(Point2D(pt2 + pt3));
+        REQUIRE(Point2D(pt1 + pt2).get() == std::array<float, 2> {5, 7});
+        REQUIRE(Point2D(pt1 + pt3).get() == std::array<double, 2> {10, 12});
+        REQUIRE(Point2D(pt2 + pt3).get() == std::array<double, 2> {11, 13});
+    }
+
+    SECTION("Subtraction")
+    {
+        REQUIRE_NOTHROW(Point2D(pt1 - pt2));
+        REQUIRE_NOTHROW(Point2D(pt1 - pt3));
+        REQUIRE_NOTHROW(Point2D(pt2 - pt3));
+        REQUIRE(Point2D(pt1 - pt2).get() == std::array<float, 2> {-1, -1});
+        REQUIRE(Point2D(pt1 - pt3).get() == std::array<double, 2> {-6, -6});
+        REQUIRE(Point2D(pt2 - pt3).get() == std::array<double, 2> {-5, -5});
+    }
+
+    SECTION("Multiplication")
+    {
+        REQUIRE_NOTHROW(Point2D(pt1 * 10));
+        REQUIRE_NOTHROW(Point2D(pt1 * 10));
+        REQUIRE_NOTHROW(Point2D(pt2 * 10));
+        REQUIRE((pt1 * 3).get() == std::array<int, 2> {6, 9});
+        REQUIRE((pt2 * 3).get() == std::array<float, 2> {9, 12});
+        REQUIRE((pt3 * 3).get() == std::array<double, 2> {24, 27});
+    }
+
+    SECTION("Division")
+    {
+        REQUIRE_THROWS(Point2D(pt1/0));
+        REQUIRE_THROWS(Point2D(pt2/0));
+        REQUIRE_THROWS(Point2D(pt3/0));
+        REQUIRE_NOTHROW(Point2D(pt1 / 10));
+        REQUIRE_NOTHROW(Point2D(pt1 / 10));
+        REQUIRE_NOTHROW(Point2D(pt2 / 10));
+        REQUIRE((pt1 / 3).get() == std::array<int, 2> {0, 1});
+        REQUIRE((pt2 / 3).get() == std::array<float, 2> {1, 4. / 3});
+        REQUIRE((pt3 / 3).get() == std::array<double, 2> {8. / 3, 3});
+    }
 }
 
 TEST_CASE("Edge cases", "[Point2D]")
