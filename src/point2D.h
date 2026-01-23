@@ -141,7 +141,8 @@ class Point2D
             requires std::integral<U> || std::floating_point<U>
         auto operator/(const U& scalar) const
         {
-            if(scalar==0){
+            if (scalar == 0)
+            {
                 throw std::invalid_argument("Cannot divide by 0.");
             }
             using ResultType = decltype(this->x / scalar);
@@ -159,7 +160,6 @@ class Point2D
             std::print("Point2D is copied by assignment from another type.\n");
             return *this;
         }
-
 
         template <typename U>
         auto operator+=(const Point2D<U>& other)

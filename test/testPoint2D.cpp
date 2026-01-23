@@ -226,9 +226,9 @@ TEST_CASE("Arithmetic operations", "[Point2D]")
 
     SECTION("Division")
     {
-        REQUIRE_THROWS(Point2D(pt1/0));
-        REQUIRE_THROWS(Point2D(pt2/0));
-        REQUIRE_THROWS(Point2D(pt3/0));
+        REQUIRE_THROWS(Point2D(pt1 / 0));
+        REQUIRE_THROWS(Point2D(pt2 / 0));
+        REQUIRE_THROWS(Point2D(pt3 / 0));
         REQUIRE_NOTHROW(Point2D(pt1 / 10));
         REQUIRE_NOTHROW(Point2D(pt1 / 10));
         REQUIRE_NOTHROW(Point2D(pt2 / 10));

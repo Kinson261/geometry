@@ -18,8 +18,6 @@ void func2(int n)
     std::print("Your number is {}\n", n);
 }
 
-
-
 int main()
 {
     // // std::thread thread1(func1);
@@ -43,7 +41,7 @@ int main()
 
     Point3D<int> a {1, 2, 3};
     a.set(Axis::X, 3);
-    std::cout<< a << "\n";
+    std::cout << a << "\n";
 
     return 0;
 }

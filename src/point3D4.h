@@ -10,8 +10,7 @@
 #include <type_traits>
 
 template <typename T>
-class Point3D4
-    : public Point3D<T>
+class Point3D4 : public Point3D<T>
 {
     private:
         T s;

@@ -261,14 +261,14 @@ TEST_CASE("Arithmetic operations", "[Point3D]")
 
     SECTION("Division")
     {
-        REQUIRE_THROWS(Point3D(pt1/0));
-        REQUIRE_THROWS(Point3D(pt2/0));
-        REQUIRE_THROWS(Point3D(pt3/0));
+        REQUIRE_THROWS(Point3D(pt1 / 0));
+        REQUIRE_THROWS(Point3D(pt2 / 0));
+        REQUIRE_THROWS(Point3D(pt3 / 0));
         REQUIRE_NOTHROW(Point3D(pt1 / 10));
         REQUIRE_NOTHROW(Point3D(pt1 / 10));
         REQUIRE_NOTHROW(Point3D(pt2 / 10));
-        REQUIRE(Point3D(pt1 / 3).get() == std::array<int, 3> {2/3, 3/3, 4/ 3});
-        REQUIRE(Point3D(pt2 / 3).get() == std::array<float, 3> {3./3, 4. / 3, 5. / 3});
-        REQUIRE(Point3D(pt3 / 3).get() == std::array<double, 3> {8. / 3, 9./3, 10./ 3});
+        REQUIRE(Point3D(pt1 / 3).get() == std::array<int, 3> {2 / 3, 3 / 3, 4 / 3});
+        REQUIRE(Point3D(pt2 / 3).get() == std::array<float, 3> {3. / 3, 4. / 3, 5. / 3});
+        REQUIRE(Point3D(pt3 / 3).get() == std::array<double, 3> {8. / 3, 9. / 3, 10. / 3});
     }
 }

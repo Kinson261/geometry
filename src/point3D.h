@@ -132,7 +132,8 @@ class Point3D : public Point2D<T>
             requires std::integral<U> || std::floating_point<U>
         auto operator/(const U& scalar) const
         {
-            if (scalar == 0 ){
+            if (scalar == 0)
+            {
                 throw std::invalid_argument("Cannot divide by 0.");
             }
             using ResultType = decltype(this->x / scalar);
