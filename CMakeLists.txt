@@ -14,6 +14,7 @@ find_package(Catch2 REQUIRED)
 add_executable(TestPoint2D test/testPoint2D.cpp)
 add_executable(TestPoint3D test/testPoint3D.cpp)
 add_executable(TestPoint3D4 test/testPoint3D4.cpp)
+ADD_EXECUTABLE(TestVector test/testVector.cpp)
 
 add_executable(Geometry main.cpp src/point2D.h src/point3D.h src/point3D4.h src/axis.h)
 target_include_directories(Geometry PRIVATE src)
