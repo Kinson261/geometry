@@ -31,6 +31,26 @@ class Point2D
             std::print("Point2D created with value [{0}, {1}]\n", x_val, y_val);
         }
 
+        Point2D(std::array<T, 2> arr) : x(arr.at(0)), y(arr.at(1)) {}
+
+        Point2D(std::vector<T> vec)
+        {
+            assert(vec.size() == 2);
+            x = vec.at(0);
+            y = vec.at(1);
+        }
+
+        // With different type
+        template <typename U>
+            requires std::integral<U> || std::floating_point<U>
+        Point2D(Point2D<U>& other) : x(static_cast<T>(other.get().at(0))), y(static_cast<T>(other.get().at(1)))
+        {}
+
+        template <typename U>
+            requires std::integral<U> || std::floating_point<U>
+        Point2D(U x_val, U y_val) : x(static_cast<T>(x_val)), y(static_cast<T>(y_val))
+        {}
+
         // Default destructor
         virtual ~Point2D()
         {
@@ -141,6 +161,13 @@ class Point2D
         }
 
 
+        template <typename U>
+        auto operator+=(const Point2D<U>& other)
+        {
+            using ResultType = std::common_type_t<T, U>;    // Same as line above C++14
+            Point2D<ResultType> tmp {static_cast<ResultType>(x) + static_cast<ResultType>(other.get().at(0)),
+                                     static_cast<ResultType>(y) + static_cast<ResultType>(other.get().at(1))};
+            *this = std::move(tmp);
             return *this;
         }
 

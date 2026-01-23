@@ -1,40 +1,49 @@
-#include <iostream>
-
-#include "src/point2D.h"
+#include "src/axis.h"
 #include "src/point3D.h"
-#include "src/point3D4.h"
+#include <array>
+#include <condition_variable>
+#include <iostream>
+#include <mutex>
+#include <print>
+#include <thread>
+
+int func1()
+{
+    std::cout << "Hello world\n";
+    return 0;
+}
+
+void func2(int n)
+{
+    std::print("Your number is {}\n", n);
+}
+
+
 
 int main()
 {
-    // Create a Point2D with type double
-    Point2D<double> p2d(3.0, 4.0);
-    std::cout << p2d << "\n";
-    p2d.set(8.9, 4.3);
-    std::cout << p2d << "\n";
-    // for (auto i:p2d.get()){std::cout << i << std::endl;}
+    // // std::thread thread1(func1);
+    // // std::thread thread2(func2, 5);
 
-    Point2D<double> p2d2(p2d);
-    std::cout << p2d2 << "\n";
-    std::cout << &p2d2 << "\n";
+    // std::array<std::thread, 5> arr_thread;
+    // for (int i =0; i<5; i++) {
+    //     arr_thread.at(i) = std::thread {[](double n) { std::cout << "\nNumber = \n" << n; }, i};
+    // }
 
-    // Create a Point3D with type int
-    Point3D<float> p3d(1.233, 2.245345, 3.56);
-    std::cout << p3d << "\n";
-    std::cout << p3d.getX() << "\t";
-    std::cout << p3d.getY() << "\t";
-    std::cout << p3d.getZ() << "\t" << "\n";
-    std::cout << "\n";
-    std::cout << p3d << "\n";
-    p3d.set(23678, 45, 76);
-    std::cout << p3d << "\n";
+    // for (int i = 0; i < 5; i++)
+    // {
+    //     arr_thread.at(i).detach();
+    // }
 
-    Point3D4<int> as1;
-    Point3D4<int> as2(23, 324, 546);
-    Point3D4<int> as3(23, 324, 546, 345);
-    std::cout << as2 << "\n";   
-    as2.set(34, 657, 546);
-    std::cout << as2 << "\n";   
-    
+    // // std::condition_variable a;
+    // // std::mutex mut;
+    // // std::lock_guard<std::mutex> fg(mut);
+
+    // std::cout << "\nMain thread\n";
+
+    Point3D<int> a {1, 2, 3};
+    a.set(Axis::X, 3);
+    std::cout<< a << "\n";
 
     return 0;
 }

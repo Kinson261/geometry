@@ -48,6 +48,15 @@ TEST_CASE("Point2D are created", "[Default Constructor]")
         REQUIRE_NOTHROW(Point2D {x_double, y_double});
         REQUIRE_NOTHROW(Point2D {4., 0.});
     }
+
+    SECTION("Testing different types in the constructor")
+    {
+        Point2D<int> a {1, 2};
+        REQUIRE_NOTHROW(Point2D<float>(a));
+        REQUIRE_NOTHROW(Point2D<int>(3.0F, 4.0F));
+        REQUIRE(Point2D<int>(3.5F, 4.2F).get() == std::array<int, 2> {3, 4});
+        REQUIRE(Point2D<float>(3, 4).get() == std::array<float, 2> {3, 4});
+    }
 }
 
 TEST_CASE("Copy constructor and assignment of Point2D", "[Copy constructor]")
@@ -67,10 +76,10 @@ TEST_CASE("Copy constructor and assignment of Point2D", "[Copy constructor]")
         point2Dint2 = point2Dint1;
         Point2D point2Dint3(point2Dint1);
         Point2D point2Dint4 {point2Dint1};
-    
-        REQUIRE(point2Dint2.get() == std::array<int, 2>{x_int,y_int});
-        REQUIRE(point2Dint3.get() == std::array<int, 2>{x_int,y_int});
-        REQUIRE(point2Dint4.get() == std::array<int, 2>{x_int,y_int});
+
+        REQUIRE(point2Dint2.get() == std::array<int, 2> {x_int, y_int});
+        REQUIRE(point2Dint3.get() == std::array<int, 2> {x_int, y_int});
+        REQUIRE(point2Dint4.get() == std::array<int, 2> {x_int, y_int});
     }
 
 
@@ -237,17 +246,12 @@ TEST_CASE("Edge cases", "[Point2D]")
     Point2D<int> min(std::numeric_limits<int>::min(), std::numeric_limits<int>::min());
 }
 
-// TEST_CASE("Type conversion", "[Point2D]") {
-//     Point2D<int> p_int(5, 10);
-//     Point2D<float> p_float = p_int;
-
-//     REQUIRE(p_float.getX() == Approx(5.0f));
-//     REQUIRE(p_float.getY() == Approx(10.0f));
-
-//     Point2D<double> p_double = p_int;
-//     REQUIRE(p_double.getX() == Approx(5.0));
-//     REQUIRE(p_double.getY() == Approx(10.0));
-// }
+TEST_CASE("Type conversion", "[Point2D]")
+{
+    Point2D<int> p_int(5, 10);
+    Point2D<float> p_float;
+    Point2D<double> p_double;
+}
 
 TEST_CASE("Stream output", "[Point2D]")
 {
