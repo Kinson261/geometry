@@ -1,6 +1,8 @@
+#include "axis.h"
 #include "point2D.h"
 #include "point3D.h"
 #include "point3D4.h"
+#include <array>
 #include <cstddef>
 #include <stdexcept>
 
@@ -40,6 +42,51 @@ class Vector<T, 4>
             dz = static_cast<T>(pt2_coord.at(2) - pt1_coord.at(2));
             pt2_coord.at(3) != pt1_coord.at(3) ? throw std::invalid_argument("Scale must be the same.") : scale = pt1_coord.at(3);
         }
+
+        std::array<T, 4> get()
+        {
+            return std::array<T, 4> {dx, dy, dz, scale};
+        }
+
+        void set(T x, T y, T z)
+        {
+            dx = x;
+            dy = y;
+            dz = z;
+            scale = 1;
+        }
+
+        void set(T x, T y, T z, T s)
+        {
+            dx = x;
+            dy = y;
+            dz = z;
+            scale = s;
+        }
+
+        void set(const Axis& axis, T value)
+        {
+            if (axis == Axis::X)
+            {
+                dx = value;
+            }
+            else if (axis == Axis::Y)
+            {
+                dy = value;
+            }
+            else if (axis == Axis::Z)
+            {
+                dz = value;
+            }
+            else if (axis == Axis::S)
+            {
+                scale = value;
+            }
+            else
+            {
+                throw std::invalid_argument("Wrong axis.");
+            }
+        }
 };
 
 template <typename T>
@@ -70,6 +117,38 @@ class Vector<T, 3>
             dy = static_cast<T>(pt2_coord.at(1) - pt1_coord.at(1));
             dz = static_cast<T>(pt2_coord.at(2) - pt1_coord.at(2));
         }
+
+        std::array<T, 3> get()
+        {
+            return std::array<T, 3> {dx, dy, dz};
+        }
+
+        void set(T x, T y, T z)
+        {
+            dx = x;
+            dy = y;
+            dz = z;
+        }
+
+        void set(const Axis& axis, T value)
+        {
+            if (axis == Axis::X)
+            {
+                dx = value;
+            }
+            else if (axis == Axis::Y)
+            {
+                dy = value;
+            }
+            else if (axis == Axis::Z)
+            {
+                dz = value;
+            }
+            else
+            {
+                throw std::invalid_argument("Wrong axis.");
+            }
+        }
 };
 
 template <typename T>
@@ -97,5 +176,32 @@ class Vector<T, 2>
             auto pt2_coord = pt2.get();
             dx = static_cast<T>(pt2_coord.at(0) - pt1_coord.at(0));
             dy = static_cast<T>(pt2_coord.at(1) - pt1_coord.at(1));
+        }
+
+        std::array<T, 2> get()
+        {
+            return std::array<T, 2> {dx, dy};
+        }
+
+        void set(T x, T y)
+        {
+            dx = x;
+            dy = y;
+        }
+
+        void set(const Axis& axis, T value)
+        {
+            if (axis == Axis::X)
+            {
+                dx = value;
+            }
+            else if (axis == Axis::Y)
+            {
+                dy = value;
+            }
+            else
+            {
+                throw std::invalid_argument("Wrong axis.");
+            }
         }
 };

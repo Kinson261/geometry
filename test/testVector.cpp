@@ -1,3 +1,4 @@
+#include <array>
 #define CATCH_CONFIG_MAIN
 #include "../src/point2D.h"
 #include "../src/point3D.h"
@@ -45,5 +46,89 @@ TEST_CASE("Vector Constructor", "[Line]")
         REQUIRE_NOTHROW(Vector<int, 4>(Point3D4<int> {1, 5, 2}, Point3D4<float> {9.54F, 4.324F, 71.F}));
         REQUIRE_NOTHROW(Vector<float, 4>(Point3D4<int> {1, 5, 2}, Point3D4<float> {9.54F, 4.324F, 71.F}));
         REQUIRE_NOTHROW(Vector<double, 4>(Point3D4<int> {1, 5, 2}, Point3D4<float> {9.54F, 4.324F, 71.F}));
+    }
+}
+
+TEST_CASE("Getter", "[Vector]")
+{
+    SECTION("Getter", "[Vector2D]")
+    {
+        Vector<int, 2> a(Point2D<int> {7, 4}, Point2D<double> {2, 9});
+        REQUIRE(a.get() == std::array<int, 2> {-5, 5});
+
+        Vector<double, 2> b(Point2D<int> {7, 4}, Point2D<double> {2.5, 9.6});
+        REQUIRE(b.get() == std::array<double, 2> {-4.5, 5.6});
+    }
+
+    SECTION("Getter", "[Vector3D]")
+    {
+        Vector<int, 3> a(Point3D<int> {7, 4, 4}, Point3D<double> {2, 9, 2});
+        REQUIRE(a.get() == std::array<int, 3> {-5, 5, -2});
+
+        Vector<double, 3> b(Point3D<int> {7, 4, 4}, Point3D<double> {2.5, 9.6, 2.4});
+        REQUIRE(b.get() == std::array<double, 3> {-4.5, 5.6, -1.6});
+    }
+
+    SECTION("Getter", "[Vector3D4]")
+    {
+        Vector<int, 4> a(Point3D4<int> {7, 4, 4}, Point3D4<double> {2, 9, 2});
+        REQUIRE(a.get() == std::array<int, 4> {-5, 5, -2, 1});
+
+        Vector<double, 4> b(Point3D4<int> {7, 4, 4}, Point3D4<double> {2.5, 9.6, 2.4});
+        REQUIRE(b.get() == std::array<double, 4> {-4.5, 5.6, -1.6, 1});
+
+        Vector<int, 4> c(Point3D4<int> {7, 4, 4, 2}, Point3D4<double> {2, 9, 2, 2});
+        REQUIRE(c.get() == std::array<int, 4> {-5, 5, -2, 2});
+
+        Vector<double, 4> d(Point3D4<int> {7, 4, 4, -8}, Point3D4<double> {2.5, 9.6, 2.4, -8});
+        REQUIRE(d.get() == std::array<double, 4> {-4.5, 5.6, -1.6, -8});
+    }
+}
+
+TEST_CASE("Setter", "[Vector]")
+{
+    SECTION("Setter", "[Vector2D]")
+    {
+        Vector<int, 2> a;
+        a.set(9, 5);
+        REQUIRE(a.get() == std::array<int, 2> {9, 5});
+        a.set(Axis::X, 4);
+        a.set(Axis::Y, 5);
+        REQUIRE_THROWS(a.set(Axis::Z, 1));
+        REQUIRE_THROWS(a.set(Axis::S, 2));
+        REQUIRE(a.get() == std::array<int, 2> {4, 5});
+    }
+
+    SECTION("Setter", "[Vector3D]")
+    {
+        Vector<double, 3> a;
+        a.set(9, 5, 8);
+        REQUIRE(a.get() == std::array<double, 3> {9, 5, 8});
+        a.set(Axis::X, 4);
+        a.set(Axis::Y, 5);
+        a.set(Axis::Z, 1);
+        REQUIRE_THROWS(a.set(Axis::S, 2));
+        REQUIRE(a.get() == std::array<double, 3> {4, 5, 1});
+    }
+
+    SECTION("Setter", "[Vector3D4]")
+    {
+        Vector<double, 4> a;
+        a.set(9, 5, 8);
+        REQUIRE(a.get() == std::array<double, 4> {9, 5, 8, 1});
+        a.set(Axis::X, 4);
+        a.set(Axis::Y, 5);
+        a.set(Axis::Z, 1);
+        a.set(Axis::S, 2);
+        REQUIRE(a.get() == std::array<double, 4> {4, 5, 1, 2});
+
+        Vector<double, 4> b;
+        b.set(9, 5, 8, 4);
+        REQUIRE(b.get() == std::array<double, 4> {9, 5, 8, 4});
+        b.set(Axis::X, 4);
+        b.set(Axis::Y, 5);
+        b.set(Axis::Z, 1);
+        b.set(Axis::S, -2);
+        REQUIRE(b.get() == std::array<double, 4> {4, 5, 1, -2});
     }
 }
