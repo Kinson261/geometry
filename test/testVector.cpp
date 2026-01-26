@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <array>
 #define CATCH_CONFIG_MAIN
 #include "../src/point2D.h"
@@ -46,6 +47,96 @@ TEST_CASE("Vector Constructor", "[Line]")
         REQUIRE_NOTHROW(Vector<int, 4>(Point3D4<int> {1, 5, 2}, Point3D4<float> {9.54F, 4.324F, 71.F}));
         REQUIRE_NOTHROW(Vector<float, 4>(Point3D4<int> {1, 5, 2}, Point3D4<float> {9.54F, 4.324F, 71.F}));
         REQUIRE_NOTHROW(Vector<double, 4>(Point3D4<int> {1, 5, 2}, Point3D4<float> {9.54F, 4.324F, 71.F}));
+    }
+
+    SECTION("Copy constructor", "[Vector<T,4>]")
+    {
+        Vector<int, 4> pt1 {64, 52, 95};
+        Vector<int, 4> pt2(pt1);
+        REQUIRE(pt2.get() == std::array<int, 4> {64, 52, 95, 1});
+    }
+
+    SECTION("Copy assignment", "[Vector<T,4>]")
+    {
+        Vector<int, 4> pt1 {64, 52, 95};
+        Vector<int, 4> pt2 = pt1;
+        REQUIRE(pt2.get() == std::array<int, 4> {64, 52, 95, 1});
+    }
+
+    SECTION("Move constructor", "[Vector<T,4>]")
+    {
+        Vector<int, 4> pt1 {64, 52, 95};
+        Vector<int, 4> pt2(std::move(pt1));
+        REQUIRE(pt2.get() == std::array<int, 4> {64, 52, 95, 1});
+        std::cout << "(" << pt1.get().at(0) << ", " << pt1.get().at(1) << ", " << pt1.get().at(2) << ", " << pt1.get().at(3) << ")\n";
+    }
+
+    SECTION("Move assignment ", "[Vector<T,4>]")
+    {
+        Vector<int, 4> pt1 {64, 52, 95};
+        Vector<int, 4> pt2 = std::move(pt1);
+        REQUIRE(pt2.get() == std::array<int, 4> {64, 52, 95, 1});
+        std::cout << "(" << pt1.get().at(0) << ", " << pt1.get().at(1) << ", " << pt1.get().at(2) << ", " << pt1.get().at(3) << ")\n";
+    }
+
+    SECTION("Copy constructor", "[Vector<T,3>]")
+    {
+        Vector<int, 3> pt1 {64, 52, 95};
+        Vector<int, 3> pt2(pt1);
+        REQUIRE(pt2.get() == std::array<int, 3> {64, 52, 95});
+    }
+
+    SECTION("Copy assignment", "[Vector<T,3>]")
+    {
+        Vector<int, 3> pt1 {64, 52, 95};
+        Vector<int, 3> pt2 = pt1;
+        REQUIRE(pt2.get() == std::array<int, 3> {64, 52, 95});
+    }
+
+    SECTION("Move constructor", "[Vector<T,3>]")
+    {
+        Vector<int, 3> pt1 {64, 52, 95};
+        Vector<int, 3> pt2(std::move(pt1));
+        REQUIRE(pt2.get() == std::array<int, 3> {64, 52, 95});
+        std::cout << "(" << pt1.get().at(0) << ", " << pt1.get().at(1) << ", " << pt1.get().at(2) << ")\n";
+    }
+
+    SECTION("Move assignment ", "[Vector<T,3>]")
+    {
+        Vector<int, 3> pt1 {64, 52, 95};
+        Vector<int, 3> pt2 = std::move(pt1);
+        REQUIRE(pt2.get() == std::array<int, 3> {64, 52, 95});
+        std::cout << "(" << pt1.get().at(0) << ", " << pt1.get().at(1) << ")\n";
+    }
+
+    SECTION("Copy constructor", "[Vector<T,2>]")
+    {
+        Vector<int, 2> pt1 {64, 52};
+        Vector<int, 2> pt2(pt1);
+        REQUIRE(pt2.get() == std::array<int, 2> {64, 52});
+    }
+
+    SECTION("Copy assignment", "[Vector<T,2>]")
+    {
+        Vector<int, 2> pt1 {64, 52};
+        Vector<int, 2> pt2 = pt1;
+        REQUIRE(pt2.get() == std::array<int, 2> {64, 52});
+    }
+
+    SECTION("Move constructor", "[Vector<T,2>]")
+    {
+        Vector<int, 2> pt1 {64, 52};
+        Vector<int, 2> pt2(std::move(pt1));
+        REQUIRE(pt2.get() == std::array<int, 2> {64, 52});
+        std::cout << "(" << pt1.get().at(0) << ", " << pt1.get().at(1) << ")\n";
+    }
+
+    SECTION("Move assignment ", "[Vector<T,2>]")
+    {
+        Vector<int, 2> pt1 {64, 52};
+        Vector<int, 2> pt2 = std::move(pt1);
+        REQUIRE(pt2.get() == std::array<int, 2> {64, 52});
+        std::cout << "(" << pt1.get().at(0) << ", " << pt1.get().at(1) << ")\n";
     }
 }
 

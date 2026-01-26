@@ -2,6 +2,7 @@
 #include "point2D.h"
 #include "point3D.h"
 #include "point3D4.h"
+#include <algorithm>
 #include <array>
 #include <cstddef>
 #include <stdexcept>
@@ -41,6 +42,53 @@ class Vector<T, 4>
             dy = static_cast<T>(pt2_coord.at(1) - pt1_coord.at(1));
             dz = static_cast<T>(pt2_coord.at(2) - pt1_coord.at(2));
             pt2_coord.at(3) != pt1_coord.at(3) ? throw std::invalid_argument("Scale must be the same.") : scale = pt1_coord.at(3);
+        }
+
+        // Copy Constructor
+        Vector(const Vector& other) : dx(other.dx), dy(other.dy), dz(other.dz), scale(other.scale) {}
+
+        // Copy assignment
+        Vector& operator=(const Vector& other)
+        {
+            if (this != other)
+            {
+                auto other_coordinate = other.get();
+                dx = other_coordinate.at(0);
+                dy = other_coordinate.at(1);
+                dz = other_coordinate.at(2);
+                scale = other_coordinate.at(3);
+            }
+            return *this;
+        }
+
+        // Move constructor
+        Vector(Vector&& other) noexcept
+        {
+            dx = std::move(other.dx);
+            dy = std::move(other.dy);
+            dz = std::move(other.dz);
+            scale = std::move(other.scale);
+            other.dx = T {};
+            other.dy = T {};
+            other.dz = T {};
+            other.scale = T {};
+        }
+
+        // Move assignment
+        Vector& operator=(Vector&& other) noexcept
+        {
+            if (this != other)
+            {
+                dx = std::move(other.dx);
+                dy = std::move(other.dy);
+                dz = std::move(other.dz);
+                scale = std::move(other.scale);
+                other.dx = T {};
+                other.dy = T {};
+                other.dz = T {};
+                other.scale = T {};
+            }
+            return *this;
         }
 
         std::array<T, 4> get()
@@ -118,6 +166,48 @@ class Vector<T, 3>
             dz = static_cast<T>(pt2_coord.at(2) - pt1_coord.at(2));
         }
 
+        // Copy Constructor
+        Vector(const Vector& other) : dx(other.dx), dy(other.dy), dz(other.dz) {}
+
+        // Copy assignment
+        Vector& operator=(const Vector& other)
+        {
+            if (this != other)
+            {
+                auto other_coordinate = other.get();
+                dx = other_coordinate.at(0);
+                dy = other_coordinate.at(1);
+                dz = other_coordinate.at(2);
+            }
+            return *this;
+        }
+
+        // Move constructor
+        Vector(Vector&& other) noexcept
+        {
+            dx = std::move(other.dx);
+            dy = std::move(other.dy);
+            dz = std::move(other.dz);
+            other.dx = T {};
+            other.dy = T {};
+            other.dz = T {};
+        }
+
+        // Move assignment
+        Vector& operator=(Vector&& other) noexcept
+        {
+            if (this != other)
+            {
+                dx = std::move(other.dx);
+                dy = std::move(other.dy);
+                dz = std::move(other.dz);
+                other.dx = T {};
+                other.dy = T {};
+                other.dz = T {};
+            }
+            return *this;
+        }
+
         std::array<T, 3> get()
         {
             return std::array<T, 3> {dx, dy, dz};
@@ -176,6 +266,43 @@ class Vector<T, 2>
             auto pt2_coord = pt2.get();
             dx = static_cast<T>(pt2_coord.at(0) - pt1_coord.at(0));
             dy = static_cast<T>(pt2_coord.at(1) - pt1_coord.at(1));
+        }
+
+        // Copy Constructor
+        Vector(const Vector& other) : dx(other.dx), dy(other.dy) {}
+
+        // Copy assignment
+        Vector& operator=(const Vector& other)
+        {
+            if (this != other)
+            {
+                auto other_coordinate = other.get();
+                dx = other_coordinate.at(0);
+                dy = other_coordinate.at(1);
+            }
+            return *this;
+        }
+
+        // Move constructor
+        Vector(Vector&& other) noexcept
+        {
+            dx = std::move(other.dx);
+            dy = std::move(other.dy);
+            other.dx = T {};
+            other.dy = T {};
+        }
+
+        // Move assignment
+        Vector& operator=(Vector&& other) noexcept
+        {
+            if (this != other)
+            {
+                dx = std::move(other.dx);
+                dy = std::move(other.dy);
+                other.dx = T {};
+                other.dy = T {};
+            }
+            return *this;
         }
 
         std::array<T, 2> get()
