@@ -6,6 +6,7 @@
 #include <array>
 #include <cstddef>
 #include <stdexcept>
+#include <type_traits>
 
 template <typename T, std::size_t N>
     requires((N >= 2) && (N <= 4))
@@ -91,7 +92,7 @@ class Vector<T, 4>
             return *this;
         }
 
-        std::array<T, 4> get()
+        std::array<T, 4> get() const
         {
             return std::array<T, 4> {dx, dy, dz, scale};
         }
@@ -211,6 +212,74 @@ class Vector<T, 4>
         }
 
         template <typename U>
+        auto& operator*(const std::array<U, 4>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            if (coord1.at(3) != other.at(3))
+            {
+                throw std::invalid_argument("Scale must be the same");
+            }
+            return ResultType {(coord1.at(0) * other.at(0)) + (coord1.at(1) * other.at(1)) + (coord1.at(2) * other.at(2))};
+        }
+
+        template <typename U>
+        auto& operator*(const Vector<U, 4>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            auto coord2 = other.get();
+            if (coord1.at(3) != coord2.at(3))
+            {
+                throw std::invalid_argument("Scale must be the same");
+            }
+            return ResultType {(coord1.at(0) * coord2.at(0)) + (coord1.at(1) * coord2.at(1)) + (coord1.at(2) * coord2.at(2))};
+        }
+
+        template <typename U>
+        auto& dot(const Vector<U, 4>& other) const
+        {
+            return (*this * other);
+        }
+
+        template <typename U>
+        auto& dot(const std::array<U, 4>& other) const
+        {
+            return (*this * other);
+        }
+
+        template <typename U>
+        auto& cross(const Vector<U, 4>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            auto coord2 = other.get();
+            if (coord1.at(3) != coord2.at(3))
+            {
+                throw std::invalid_argument("Scale must be the same");
+            }
+            return Vector<ResultType, 4>
+            {
+                (coord1.at(1) * coord2.at(2)) - (coord2.at(1) * coord1.at(2)),
+                (coord1.at(0) * coord2.at(2)) - (coord2.at(0) * coord1.at(2)),
+                (coord1.at(0) * coord2.at(1)) - (coord2.at(0) * coord1.at(1)), 
+                (coord1.at(3))};
+        }
+
+        template <typename U>
+        auto& cross(const std::array<U, 4>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            if (coord1.at(3) != other.at(3))
+            {
+                throw std::invalid_argument("Scale must be the same");
+            }
+            return Vector<ResultType, 4> {(coord1.at(1) * other.at(2)) - (other.at(1) * coord1.at(2)), (coord1.at(0) * other.at(2)) - (other.at(0) * coord1.at(2)),
+                                          (coord1.at(0) * other.at(1)) - (other.at(0) * coord1.at(1)), (coord1.at(3))};
+        }
+
+        template <typename U>
         Vector& operator/(const std::array<U, 4>& other) = delete;
 
         template <typename U>
@@ -288,7 +357,7 @@ class Vector<T, 3>
             return *this;
         }
 
-        std::array<T, 3> get()
+        std::array<T, 3> get() const
         {
             return std::array<T, 3> {dx, dy, dz};
         }
@@ -370,6 +439,60 @@ class Vector<T, 3>
             return Vector<ResultType, 3> {(coord1.at(0) - coord2.at(0)), coord1.at(1) - coord2.at(1), (coord1.at(2) - coord2.at(2))};
         }
 
+        template <typename U>
+        auto& operator*(const std::array<U, 3>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            return ResultType {(coord1.at(0) * other.at(0)) + (coord1.at(1) * other.at(1)) + (coord1.at(2) * other.at(2))};
+        }
+
+        template <typename U>
+        auto& operator*(const Vector<U, 3>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            auto coord2 = other.get();
+            return ResultType {(coord1.at(0) * coord2.at(0)) + (coord1.at(1) * coord2.at(1)) + (coord1.at(2) * coord2.at(2))};
+        }
+
+        template <typename U>
+        auto& dot(const Vector<U, 3>& other) const
+        {
+            return (*this * other);
+        }
+
+        template <typename U>
+        auto& dot(const std::array<U, 3>& other) const
+        {
+            return (*this * other);
+        }
+
+        template <typename U>
+        auto& cross(const Vector<U, 3>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            auto coord2 = other.get();
+
+            return Vector<ResultType, 3> {
+                (coord1.at(1) * coord2.at(2)) - (coord2.at(1) * coord1.at(2)),
+                (coord1.at(0) * coord2.at(2)) - (coord2.at(0) * coord1.at(2)),
+                (coord1.at(0) * coord2.at(1)) - (coord2.at(0) * coord1.at(1)),
+            };
+        }
+
+        template <typename U>
+        auto& cross(const std::array<U, 3>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            return Vector<ResultType, 4> {
+                (coord1.at(1) * other.at(2)) - (other.at(1) * coord1.at(2)),
+                (coord1.at(0) * other.at(2)) - (other.at(0) * coord1.at(2)),
+                (coord1.at(0) * other.at(1)) - (other.at(0) * coord1.at(1)),
+            };
+        }
 
         template <typename U>
         Vector& operator/(const std::array<U, 3>& other) = delete;
@@ -442,7 +565,7 @@ class Vector<T, 2>
             return *this;
         }
 
-        std::array<T, 2> get()
+        std::array<T, 2> get() const
         {
             return std::array<T, 2> {dx, dy};
         }
@@ -517,6 +640,35 @@ class Vector<T, 2>
             auto coord1 = get();
             auto coord2 = other.get();
             return Vector<ResultType, 2> {(coord1.at(0) - coord2.at(0)), (coord1.at(1) - coord2.at(1))};
+        }
+
+        template <typename U>
+        auto& operator*(const std::array<U, 2>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            return ResultType {(coord1.at(0) * other.at(0)) + (coord1.at(1) * other.at(1))};
+        }
+
+        template <typename U>
+        auto& operator*(const Vector<U, 2>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            auto coord2 = other.get();
+            return ResultType {(coord1.at(0) * coord2.at(0)) + (coord1.at(1) * coord2.at(1))};
+        }
+
+        template <typename U>
+        auto& dot(const Vector<U, 2>& other) const
+        {
+            return (*this * other);
+        }
+
+        template <typename U>
+        auto& dot(const std::array<U, 2>& other) const
+        {
+            return (*this * other);
         }
 
         template <typename U>
