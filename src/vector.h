@@ -135,6 +135,31 @@ class Vector<T, 4>
                 throw std::invalid_argument("Wrong axis.");
             }
         }
+
+        template <typename U>
+        bool collinear(const Vector<U, 4>& other) const
+        {
+            std::array<T, 4> coord1 = get();
+            std::array<U, 4> coord2 = other.get();
+            if (coord1.at(3) != coord2.at(3))
+            {
+                throw std::invalid_argument("Scale must be equal");
+            }
+            return static_cast<bool>(((coord1.at(0) / coord2.at(0)) == (coord1.at(1) / coord2.at(1))) && ((coord1.at(0) / coord2.at(0)) == (coord1.at(2) / coord2.at(2))));
+        }
+
+        template <typename U>
+        bool orthogonal(const Vector<U, 4>& other) const
+        {
+            std::array<T, 4> coord1 = get();
+            std::array<U, 4> coord2 = other.get();
+            if (coord1.at(3) != coord2.at(3))
+            {
+                throw std::invalid_argument("Scale must be equal");
+            }
+            return static_cast<bool>(((coord1.at(0) * coord2.at(0)) + (coord1.at(1) * coord2.at(1)) + (coord1.at(2) * coord2.at(2))) == 0);
+        }
+
 };
 
 template <typename T>
@@ -239,6 +264,22 @@ class Vector<T, 3>
                 throw std::invalid_argument("Wrong axis.");
             }
         }
+
+        template <typename U>
+        bool collinear(const Vector<U, 3>& other) const
+        {
+            std::array<T, 3> coord1 = get();
+            std::array<U, 3> coord2 = other.get();
+            return static_cast<bool>(((coord1.at(0) / coord2.at(0)) == (coord1.at(1) / coord2.at(1))) && ((coord1.at(0) / coord2.at(0)) == (coord1.at(2) / coord2.at(2))));
+        }
+
+        template <typename U>
+        bool orthogonal(const Vector<U, 3>& other) const
+        {
+            std::array<T, 3> coord1 = get();
+            std::array<U, 3> coord2 = other.get();
+            return static_cast<bool>(((coord1.at(0) * coord2.at(0)) + (coord1.at(1) * coord2.at(1)) + (coord1.at(2) * coord2.at(2))) == 0);
+        }
 };
 
 template <typename T>
@@ -330,5 +371,21 @@ class Vector<T, 2>
             {
                 throw std::invalid_argument("Wrong axis.");
             }
+        }
+
+        template <typename U>
+        bool collinear(const Vector<U, 2>& other) const
+        {
+            std::array<T, 2> coord1 = get();
+            std::array<U, 2> coord2 = other.get();
+            return static_cast<bool>((coord1.at(0) / coord2.at(0)) == (coord1.at(1) / coord2.at(1)));
+        }
+
+        template <typename U>
+        bool orthogonal(const Vector<U, 2>& other) const
+        {
+            std::array<T, 2> coord1 = get();
+            std::array<U, 2> coord2 = other.get();
+            return static_cast<bool>(((coord1.at(0) * coord2.at(0)) + (coord1.at(1) * coord2.at(1))) == 0);
         }
 };
