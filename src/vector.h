@@ -160,6 +160,56 @@ class Vector<T, 4>
             return static_cast<bool>(((coord1.at(0) * coord2.at(0)) + (coord1.at(1) * coord2.at(1)) + (coord1.at(2) * coord2.at(2))) == 0);
         }
 
+        template <typename U>
+        Vector& operator+(const std::array<U, 4>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            if (coord1.at(3) != other.at(3))
+            {
+                throw std::invalid_argument("Scale must be the same");
+            }
+            return Vector<ResultType, 4> {(coord1.at(0) + other.at(0)), coord1.at(1) + other.at(1), coord1.at(2) + other.at(2), (coord1.at(3))};
+        }
+
+        template <typename U>
+        Vector& operator+(const Vector<U, 4>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            auto coord2 = other.get();
+            if (coord1.at(3) != coord2.at(3))
+            {
+                throw std::invalid_argument("Scale must be the same");
+            }
+            return Vector<ResultType, 4> {(coord1.at(0) + coord2.at(0)), coord1.at(1) + coord2.at(1), coord1.at(2) + coord2.at(2), (coord1.at(3))};
+        }
+
+        template <typename U>
+        Vector& operator-(const std::array<U, 4>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            if (coord1.at(3) != other.at(3))
+            {
+                throw std::invalid_argument("Scale must be the same");
+            }
+            return Vector<ResultType, 4> {(coord1.at(0) - other.at(0)), coord1.at(1) - other.at(1), coord1.at(2) - other.at(2), (coord1.at(3))};
+        }
+
+        template <typename U>
+        Vector& operator-(const Vector<U, 4>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            auto coord2 = other.get();
+            if (coord1.at(3) != coord2.at(3))
+            {
+                throw std::invalid_argument("Scale must be the same");
+            }
+            return Vector<ResultType, 4> {(coord1.at(0) - coord2.at(0)), coord1.at(1) - coord2.at(1), coord1.at(2) - coord2.at(2), (coord1.at(3))};
+        }
+
 };
 
 template <typename T>
@@ -280,6 +330,41 @@ class Vector<T, 3>
             std::array<U, 3> coord2 = other.get();
             return static_cast<bool>(((coord1.at(0) * coord2.at(0)) + (coord1.at(1) * coord2.at(1)) + (coord1.at(2) * coord2.at(2))) == 0);
         }
+
+        template <typename U>
+        Vector& operator+(const std::array<U, 3>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            return Vector<ResultType, 3> {(coord1.at(0) + other.at(0)), coord1.at(1) + other.at(1), (coord1.at(2) + other.at(2))};
+        }
+
+        template <typename U>
+        Vector& operator+(const Vector<U, 3>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            auto coord2 = other.get();
+            return Vector<ResultType, 3> {(coord1.at(0) + coord2.at(0)), coord1.at(1) + coord2.at(1), (coord1.at(2) + coord2.at(2))};
+        }
+
+        template <typename U>
+        Vector& operator-(const std::array<U, 3>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            return Vector<ResultType, 3> {(coord1.at(0) - other.at(0)), coord1.at(1) - other.at(1), (coord1.at(2) - other.at(2))};
+        }
+
+        template <typename U>
+        Vector& operator-(const Vector<U, 3>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            auto coord2 = other.get();
+            return Vector<ResultType, 3> {(coord1.at(0) - coord2.at(0)), coord1.at(1) - coord2.at(1), (coord1.at(2) - coord2.at(2))};
+        }
+
 };
 
 template <typename T>
@@ -388,4 +473,39 @@ class Vector<T, 2>
             std::array<U, 2> coord2 = other.get();
             return static_cast<bool>(((coord1.at(0) * coord2.at(0)) + (coord1.at(1) * coord2.at(1))) == 0);
         }
+
+        template <typename U>
+        Vector& operator+(const std::array<U, 2>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            return Vector<ResultType, 2> {(coord1.at(0) + other.at(0)), (coord1.at(1) + other.at(1))};
+        }
+
+        template <typename U>
+        Vector& operator+(const Vector<U, 2>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            auto coord2 = other.get();
+            return Vector<ResultType, 2> {(coord1.at(0) + coord2.at(0)), (coord1.at(1) + coord2.at(1))};
+        }
+
+        template <typename U>
+        Vector& operator-(const std::array<U, 2>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            return Vector<ResultType, 2> {(coord1.at(0) - other.at(0)), (coord1.at(1) - other.at(1))};
+        }
+
+        template <typename U>
+        Vector& operator-(const Vector<U, 2>& other) const
+        {
+            using ResultType = std::common_type_t<T, U>;
+            auto coord1 = get();
+            auto coord2 = other.get();
+            return Vector<ResultType, 2> {(coord1.at(0) - coord2.at(0)), (coord1.at(1) - coord2.at(1))};
+        }
+
 };
