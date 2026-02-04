@@ -210,6 +210,11 @@ class Vector<T, 4>
             return Vector<ResultType, 4> {(coord1.at(0) - coord2.at(0)), coord1.at(1) - coord2.at(1), coord1.at(2) - coord2.at(2), (coord1.at(3))};
         }
 
+        template <typename U>
+        Vector& operator/(const std::array<U, 4>& other) = delete;
+
+        template <typename U>
+        Vector& operator/(const Vector<U, 4>& other) = delete;
 };
 
 template <typename T>
@@ -365,6 +370,12 @@ class Vector<T, 3>
             return Vector<ResultType, 3> {(coord1.at(0) - coord2.at(0)), coord1.at(1) - coord2.at(1), (coord1.at(2) - coord2.at(2))};
         }
 
+
+        template <typename U>
+        Vector& operator/(const std::array<U, 3>& other) = delete;
+
+        template <typename U>
+        Vector& operator/(const Vector<U, 3>& other) = delete;
 };
 
 template <typename T>
@@ -508,4 +519,9 @@ class Vector<T, 2>
             return Vector<ResultType, 2> {(coord1.at(0) - coord2.at(0)), (coord1.at(1) - coord2.at(1))};
         }
 
+        template <typename U>
+        Vector& operator/(const std::array<U, 2>& other) = delete;
+
+        template <typename U>
+        Vector& operator/(const Vector<U, 2>& other) = delete;
 };
