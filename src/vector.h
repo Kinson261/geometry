@@ -170,7 +170,7 @@ class Vector<T, 4>
         }
 
         template <typename U>
-        Vector& operator+(const std::array<U, 4>& other) const
+        Vector operator+(const std::array<U, 4>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -182,7 +182,7 @@ class Vector<T, 4>
         }
 
         template <typename U>
-        Vector& operator+(const Vector<U, 4>& other) const
+        Vector operator+(const Vector<U, 4>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -195,7 +195,7 @@ class Vector<T, 4>
         }
 
         template <typename U>
-        Vector& operator-(const std::array<U, 4>& other) const
+        Vector operator-(const std::array<U, 4>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -207,7 +207,7 @@ class Vector<T, 4>
         }
 
         template <typename U>
-        Vector& operator-(const Vector<U, 4>& other) const
+        Vector operator-(const Vector<U, 4>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -220,7 +220,7 @@ class Vector<T, 4>
         }
 
         template <typename U>
-        auto& operator*(const std::array<U, 4>& other) const
+        auto operator*(const std::array<U, 4>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -232,7 +232,7 @@ class Vector<T, 4>
         }
 
         template <typename U>
-        auto& operator*(const Vector<U, 4>& other) const
+        auto operator*(const Vector<U, 4>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -251,13 +251,13 @@ class Vector<T, 4>
         }
 
         template <typename U>
-        auto& dot(const std::array<U, 4>& other) const
+        auto dot(const std::array<U, 4>& other) const
         {
             return (*this * other);
         }
 
         template <typename U>
-        auto& cross(const Vector<U, 4>& other) const
+        auto cross(const Vector<U, 4>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -275,7 +275,7 @@ class Vector<T, 4>
         }
 
         template <typename U>
-        auto& cross(const std::array<U, 4>& other) const
+        auto cross(const std::array<U, 4>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -288,10 +288,10 @@ class Vector<T, 4>
         }
 
         template <typename U>
-        Vector& operator/(const std::array<U, 4>& other) = delete;
+        Vector operator/(const std::array<U, 4>& other) = delete;
 
         template <typename U>
-        Vector& operator/(const Vector<U, 4>& other) = delete;
+        Vector operator/(const Vector<U, 4>& other) = delete;
 };
 
 template <typename T>
@@ -420,7 +420,7 @@ class Vector<T, 3>
         }
 
         template <typename U>
-        Vector& operator+(const std::array<U, 3>& other) const
+        Vector operator+(const std::array<U, 3>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -428,7 +428,7 @@ class Vector<T, 3>
         }
 
         template <typename U>
-        Vector& operator+(const Vector<U, 3>& other) const
+        Vector operator+(const Vector<U, 3>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -437,7 +437,7 @@ class Vector<T, 3>
         }
 
         template <typename U>
-        Vector& operator-(const std::array<U, 3>& other) const
+        Vector operator-(const std::array<U, 3>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -445,7 +445,7 @@ class Vector<T, 3>
         }
 
         template <typename U>
-        Vector& operator-(const Vector<U, 3>& other) const
+        Vector operator-(const Vector<U, 3>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -454,7 +454,7 @@ class Vector<T, 3>
         }
 
         template <typename U>
-        auto& operator*(const std::array<U, 3>& other) const
+        auto operator*(const std::array<U, 3>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -462,7 +462,7 @@ class Vector<T, 3>
         }
 
         template <typename U>
-        auto& operator*(const Vector<U, 3>& other) const
+        auto operator*(const Vector<U, 3>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -477,13 +477,13 @@ class Vector<T, 3>
         }
 
         template <typename U>
-        auto& dot(const std::array<U, 3>& other) const
+        auto dot(const std::array<U, 3>& other) const
         {
             return (*this * other);
         }
 
         template <typename U>
-        auto& cross(const Vector<U, 3>& other) const
+        auto cross(const Vector<U, 3>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -497,7 +497,7 @@ class Vector<T, 3>
         }
 
         template <typename U>
-        auto& cross(const std::array<U, 3>& other) const
+        auto cross(const std::array<U, 3>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -509,10 +509,10 @@ class Vector<T, 3>
         }
 
         template <typename U>
-        Vector& operator/(const std::array<U, 3>& other) = delete;
+        Vector operator/(const std::array<U, 3>& other) = delete;
 
         template <typename U>
-        Vector& operator/(const Vector<U, 3>& other) = delete;
+        Vector operator/(const Vector<U, 3>& other) = delete;
 };
 
 template <typename T>
@@ -625,11 +625,11 @@ class Vector<T, 2>
 
         double magnitude()
         {
-            return static_cast<double>(std::sqrt(std::pow(dx, 2) + std::pow(dy, 2)))
+            return static_cast<double>(std::sqrt(std::pow(dx, 2) + std::pow(dy, 2)));
         }
 
         template <typename U>
-        Vector& operator+(const std::array<U, 2>& other) const
+        Vector operator+(const std::array<U, 2>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -637,7 +637,7 @@ class Vector<T, 2>
         }
 
         template <typename U>
-        Vector& operator+(const Vector<U, 2>& other) const
+        Vector operator+(const Vector<U, 2>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -646,7 +646,7 @@ class Vector<T, 2>
         }
 
         template <typename U>
-        Vector& operator-(const std::array<U, 2>& other) const
+        Vector operator-(const std::array<U, 2>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -654,7 +654,7 @@ class Vector<T, 2>
         }
 
         template <typename U>
-        Vector& operator-(const Vector<U, 2>& other) const
+        Vector operator-(const Vector<U, 2>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -663,7 +663,7 @@ class Vector<T, 2>
         }
 
         template <typename U>
-        auto& operator*(const std::array<U, 2>& other) const
+        auto operator*(const std::array<U, 2>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -671,7 +671,7 @@ class Vector<T, 2>
         }
 
         template <typename U>
-        auto& operator*(const Vector<U, 2>& other) const
+        auto operator*(const Vector<U, 2>& other) const
         {
             using ResultType = std::common_type_t<T, U>;
             auto coord1 = get();
@@ -686,14 +686,14 @@ class Vector<T, 2>
         }
 
         template <typename U>
-        auto& dot(const std::array<U, 2>& other) const
+        auto dot(const std::array<U, 2>& other) const
         {
             return (*this * other);
         }
 
         template <typename U>
-        Vector& operator/(const std::array<U, 2>& other) = delete;
+        Vector operator/(const std::array<U, 2>& other) = delete;
 
         template <typename U>
-        Vector& operator/(const Vector<U, 2>& other) = delete;
+        Vector operator/(const Vector<U, 2>& other) = delete;
 };
