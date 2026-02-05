@@ -4,7 +4,9 @@
 #include "point3D4.h"
 #include <algorithm>
 #include <array>
+#include <cmath>
 #include <cstddef>
+#include <cstdlib>
 #include <stdexcept>
 #include <type_traits>
 
@@ -13,6 +15,7 @@ template <typename T, std::size_t N>
 class Vector;
 
 template <typename T>
+    requires std::is_integral_v<T> || std::is_floating_point_v<T>
 class Vector<T, 4>
 {
     private:
@@ -161,6 +164,11 @@ class Vector<T, 4>
             return static_cast<bool>(((coord1.at(0) * coord2.at(0)) + (coord1.at(1) * coord2.at(1)) + (coord1.at(2) * coord2.at(2))) == 0);
         }
 
+        double magnitude()
+        {
+            return static_cast<double>(std::sqrt(std::pow(dx, 2) + std::pow(dy, 2) + std::pow(dz, 2))) / static_cast<double>(std::abs(scale));
+        }
+
         template <typename U>
         Vector& operator+(const std::array<U, 4>& other) const
         {
@@ -287,6 +295,7 @@ class Vector<T, 4>
 };
 
 template <typename T>
+    requires std::is_integral_v<T> || std::is_floating_point_v<T>
 class Vector<T, 3>
 {
     private:
@@ -405,6 +414,11 @@ class Vector<T, 3>
             return static_cast<bool>(((coord1.at(0) * coord2.at(0)) + (coord1.at(1) * coord2.at(1)) + (coord1.at(2) * coord2.at(2))) == 0);
         }
 
+        double magnitude()
+        {
+            return static_cast<double>(std::sqrt(std::pow(dx, 2) + std::pow(dy, 2) + std::pow(dz, 2)));
+        }
+
         template <typename U>
         Vector& operator+(const std::array<U, 3>& other) const
         {
@@ -502,6 +516,7 @@ class Vector<T, 3>
 };
 
 template <typename T>
+    requires std::is_integral_v<T> || std::is_floating_point_v<T>
 class Vector<T, 2>
 {
     private:
@@ -606,6 +621,11 @@ class Vector<T, 2>
             std::array<T, 2> coord1 = get();
             std::array<U, 2> coord2 = other.get();
             return static_cast<bool>(((coord1.at(0) * coord2.at(0)) + (coord1.at(1) * coord2.at(1))) == 0);
+        }
+
+        double magnitude()
+        {
+            return static_cast<double>(std::sqrt(std::pow(dx, 2) + std::pow(dy, 2)))
         }
 
         template <typename U>
