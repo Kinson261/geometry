@@ -245,7 +245,16 @@ class Vector<T, 4>
         }
 
         template <typename U>
-        auto& dot(const Vector<U, 4>& other) const
+        bool operator==(const Vector<U, 4>& other) const
+        {
+            auto coord1 = get();
+            auto coord2 = other.get();
+            coord1.at(3) != coord2.at(3) ? throw std::invalid_argument("Scale must be the same") : true;
+            return static_cast<bool>((coord1.at(0) == coord2.at(0)) && (coord1.at(1) == coord2.at(1)) && (coord1.at(2) == coord2.at(2)));
+        }
+
+        template <typename U>
+        auto dot(const Vector<U, 4>& other) const
         {
             return (*this * other);
         }
@@ -471,7 +480,16 @@ class Vector<T, 3>
         }
 
         template <typename U>
-        auto& dot(const Vector<U, 3>& other) const
+        bool operator==(const Vector<U, 3>& other) const
+        {
+            auto coord1 = get();
+            auto coord2 = other.get();
+
+            return static_cast<bool>((coord1.at(0) == coord2.at(0)) && (coord1.at(1) == coord2.at(1)) && (coord1.at(2) == coord2.at(2)));
+        }
+
+        template <typename U>
+        auto dot(const Vector<U, 3>& other) const
         {
             return (*this * other);
         }
@@ -680,7 +698,16 @@ class Vector<T, 2>
         }
 
         template <typename U>
-        auto& dot(const Vector<U, 2>& other) const
+        bool operator==(const Vector<U, 2>& other) const
+        {
+            auto coord1 = get();
+            auto coord2 = other.get();
+
+            return static_cast<bool>((coord1.at(0) == coord2.at(0)) && (coord1.at(1) == coord2.at(1)));
+        }
+
+        template <typename U>
+        auto dot(const Vector<U, 2>& other) const
         {
             return (*this * other);
         }
