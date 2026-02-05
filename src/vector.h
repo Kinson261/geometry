@@ -32,6 +32,8 @@ class Vector<T, 4>
 
         Vector(T x, T y, T z, T s) : dx(x), dy(y), dz(z), scale(s) {}
 
+        Vector(const std::array<T, 4>& arr) : dx(arr.at(0)), dy(arr.at(1)), dz(arr.at(2)), scale(arr.at(3)) {}
+
         // Destructor
         virtual ~Vector() {}
 
@@ -318,6 +320,8 @@ class Vector<T, 3>
 
         Vector(T x, T y, T z) : dx(x), dy(y), dz(z) {}
 
+        Vector(const std::array<T, 3>& arr) : dx(arr.at(0)), dy(arr.at(1)), dz(arr.at(2)) {}
+
         // Destructor
         virtual ~Vector() {}
 
@@ -546,6 +550,8 @@ class Vector<T, 2>
         Vector() : dx(), dy() {}
 
         Vector(T x, T y) : dx(x), dy(y) {}
+
+        Vector(const std::array<T, 2>& arr) : dx(arr.at(0)), dy(arr.at(1)) {}
 
         // Destructor
         virtual ~Vector() {}
