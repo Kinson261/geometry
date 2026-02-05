@@ -222,4 +222,181 @@ TEST_CASE("Setter", "[Vector]")
         b.set(Axis::S, -2);
         REQUIRE(b.get() == std::array<double, 4> {4, 5, 1, -2});
     }
+
+    SECTION("collinear")
+    {
+        SECTION("[Vector<T,2>]")
+        {
+            Vector<int, 2> pt1(1, 2);
+            Vector<int, 2> pt2(2, 4);
+            std::array<int, 2> pt3 {2, 4};
+
+            REQUIRE(pt1.collinear(pt2) == true);
+            REQUIRE(pt1.collinear(Vector<int, 2>(pt3)) == true);
+        }
+        SECTION("[Vector<T,3>]")
+        {
+            Vector<int, 3> pt1 {1, 2, 2};
+            Vector<int, 3> pt2 {2, 4, 4};
+            std::array<int, 3> pt3 {2, 4, 4};
+
+            REQUIRE(pt1.collinear(pt2) == true);
+            REQUIRE(pt1.collinear(Vector<int, 3>(pt3)) == true);
+        }
+        SECTION("[Vector<T,4>]")
+        {
+            Vector<int, 4> pt1 {1, 2, 2, 1};
+            Vector<int, 4> pt2 {2, 4, 4, 1};
+            std::array<int, 4> pt3 {2, 4, 4, 1};
+
+            REQUIRE(pt1.collinear(pt2) == true);
+            REQUIRE(pt1.collinear(Vector<int, 4>(pt3)) == true);
+        }
+    }
+
+    SECTION("orthogonal")
+    {
+        SECTION("[Vector<T,2>]")
+        {
+            Vector<int, 2> pt1 {1, 0};
+            Vector<int, 2> pt2 {0, 1};
+            std::array<int, 2> pt3 {0, 1};
+
+            REQUIRE(pt1.orthogonal(pt2) == true);
+            REQUIRE(pt1.orthogonal(Vector<int, 2>(pt3)) == true);
+        }
+
+        SECTION("[Vector<T,3>]")
+        {
+            Vector<int, 3> pt1 {1, 0, 0};
+            Vector<int, 3> pt2 {0, 1, 0};
+            std::array<int, 3> pt3 {0, 0, 1};
+
+            REQUIRE(pt1.orthogonal(pt2) == true);
+            REQUIRE(pt1.orthogonal(Vector<int, 3>(pt3)) == true);
+            REQUIRE(pt2.orthogonal(Vector<int, 3>(pt3)) == true);
+        }
+        SECTION("[Vector<T,4>]")
+        {
+            Vector<int, 4> pt1 {1, 0, 0, 1};
+            Vector<int, 4> pt2 {0, 1, 0, 1};
+            std::array<int, 4> pt3 {0, 0, 1, 1};
+            std::array<int, 4> pt4 {0, 0, 1, 2};
+
+            REQUIRE(pt1.orthogonal(pt2) == true);
+            REQUIRE(pt1.orthogonal(Vector<int, 4>(pt3)) == true);
+            REQUIRE(pt2.orthogonal(Vector<int, 4>(pt3)) == true);
+            REQUIRE_THROWS(pt2.orthogonal(Vector<int, 4>(pt4)));
+        }
+    }
+
+    SECTION("operations")
+    {
+        SECTION("Addition")
+        {
+            SECTION("[Vector<T,2>]")
+            {
+                Vector<int, 2> pt1 {1, 0};
+                Vector<int, 2> pt2 {0, 1};
+                Vector<int, 2> pt3 {1, 1};
+                REQUIRE((pt1 + pt2).get() == std::array<int, 2> {1, 1});
+                REQUIRE((pt1 + pt2) == pt3);
+            }
+            SECTION("[Vector<T,3>]")
+            {
+                Vector<int, 3> pt1 {1, 0, 3};
+                Vector<int, 3> pt2 {0, 1, 2};
+                Vector<int, 3> pt3 {1, 1, 5};
+                REQUIRE((pt1 + pt2).get() == std::array<int, 3> {1, 1, 5});
+                REQUIRE((pt1 + pt2) == pt3);
+            }
+            SECTION("[Vector<T,4>]")
+            {
+                Vector<int, 4> pt1 {1, 0, 3, 1};
+                Vector<int, 4> pt2 {0, 1, 2, 1};
+                Vector<int, 4> pt3 {1, 1, 5, 1};
+                Vector<int, 4> pt4 {1, 1, 5, 2};
+                REQUIRE((pt1 + pt2).get() == std::array<int, 4> {1, 1, 5, 1});
+                REQUIRE((pt1 + pt2) == pt3);
+                REQUIRE_THROWS((pt1 + pt2) == pt4);
+            }
+        }
+
+        SECTION("Subtraction")
+        {
+            SECTION("[Vector<T,2>]")
+            {
+                Vector<int, 2> pt1 {1, 0};
+                Vector<int, 2> pt2 {0, 1};
+                Vector<int, 2> pt3 {1, -1};
+                REQUIRE((pt1 - pt2).get() == std::array<int, 2> {1, -1});
+                REQUIRE((pt1 - pt2) == pt3);
+            }
+            SECTION("[Vector<T,3>]")
+            {
+                Vector<int, 3> pt1 {1, 0, 3};
+                Vector<int, 3> pt2 {0, 1, 2};
+                Vector<int, 3> pt3 {1, -1, 1};
+                REQUIRE((pt1 - pt2).get() == std::array<int, 3> {1, -1, 1});
+                REQUIRE((pt1 - pt2) == pt3);
+            }
+            SECTION("[Vector<T,4>]")
+            {
+                Vector<int, 4> pt1 {1, 0, 3, 1};
+                Vector<int, 4> pt2 {0, 1, 2, 1};
+                Vector<int, 4> pt3 {1, -1, 1, 1};
+                Vector<int, 4> pt4 {1, -1, 1, 2};
+                REQUIRE((pt1 - pt2).get() == std::array<int, 4> {1, -1, 1, 1});
+                REQUIRE((pt1 - pt2) == pt3);
+                REQUIRE_THROWS((pt1 - pt2) == pt4);
+            }
+        }
+        SECTION("Multiplication")
+        {
+            SECTION("[Vector<T,2>]")
+            {
+                Vector<int, 2> pt1 {1, 4};
+                Vector<int, 2> pt2 {4, 16};
+                REQUIRE((pt1 * pt2) == 68);
+            }
+            SECTION("[Vector<T,3>]")
+            {
+                Vector<int, 3> pt1 {1, 4, 2};
+                Vector<int, 3> pt2 {4, 16, 3};
+                REQUIRE((pt1 * pt2) == 74);
+            }
+            SECTION("[Vector<T,4>]")
+            {
+                Vector<int, 4> pt1 {1, 4, 2, 1};
+                Vector<int, 4> pt2 {4, 16, 3, 1};
+                Vector<int, 4> pt3 {4, 16, 3, 2};
+                REQUIRE((pt1 * pt2) == 74);
+                REQUIRE_THROWS(pt1 * pt3);
+            }
+        }
+
+        SECTION("Scalar Product")
+        {
+            SECTION("[Vector<T,2>]")
+            {
+                Vector<int, 2> pt1 {1, 4};
+                Vector<int, 2> pt2 {4, 16};
+                REQUIRE((pt1.dot(pt2)) == 68);
+            }
+            SECTION("[Vector<T,3>]")
+            {
+                Vector<int, 3> pt1 {1, 4, 2};
+                Vector<int, 3> pt2 {4, 16, 3};
+                REQUIRE((pt1.dot(pt2)) == 74);
+            }
+            SECTION("[Vector<T,4>]")
+            {
+                Vector<int, 4> pt1 {1, 4, 2, 1};
+                Vector<int, 4> pt2 {4, 16, 3, 1};
+                Vector<int, 4> pt3 {4, 16, 3, 2};
+                REQUIRE((pt1.dot(pt2)) == 74);
+                REQUIRE_THROWS(pt1.dot(pt3));
+            }
+        }
+    }
 }
