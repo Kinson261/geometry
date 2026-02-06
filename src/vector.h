@@ -303,6 +303,12 @@ class Vector<T, 4>
 
         template <typename U>
         Vector operator/(const Vector<U, 4>& other) = delete;
+
+        Vector normalized()
+        {
+            double length = magnitude();
+            return Vector<T, 4> {dx/length, dy/length, dz/length, scale};
+        }
 };
 
 template <typename T>
@@ -535,6 +541,12 @@ class Vector<T, 3>
 
         template <typename U>
         Vector operator/(const Vector<U, 3>& other) = delete;
+
+        Vector normalized()
+        {
+            double length = magnitude();
+            return Vector<T, 3> {dx / length, dy / length, dz / length};
+        }
 };
 
 template <typename T>
@@ -729,4 +741,10 @@ class Vector<T, 2>
 
         template <typename U>
         Vector operator/(const Vector<U, 2>& other) = delete;
+
+        Vector normalized()
+        {
+            double length = magnitude();
+            return Vector<T, 2> {dx / length, dy / length};
+        }
 };
