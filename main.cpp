@@ -4,7 +4,6 @@
 #include <condition_variable>
 #include <iostream>
 #include <mutex>
-#include <print>
 #include <thread>
 
 int func1()
@@ -15,7 +14,7 @@ int func1()
 
 void func2(int n)
 {
-    std::print("Your number is {}\n", n);
+    std::cout << ("Your number is {}\n", n);
 }
 
 int main()

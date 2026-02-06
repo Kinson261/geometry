@@ -5,7 +5,6 @@
 #include <array>
 #include <concepts>
 #include <iostream>
-#include <print>
 #include <stdexcept>
 #include <type_traits>
 
@@ -19,18 +18,18 @@ class Point3D : public Point2D<T>
         // Constructor to initialize x, y from the base class, and z for this class
         Point3D() : Point2D<T>(), z(T {})
         {
-            std::print("Point3D created without initialization.\n");
+            std::cout << ("Point3D created without initialization.\n");
         }
 
         Point3D(T x_val, T y_val, T z_val) : Point2D<T>(x_val, y_val), z(z_val)
         {
-            std::print("Point3D created with value [{0}, {1}, {2}].\n", x_val, y_val, z_val);
+            std::cout << ("Point3D created with value [{0}, {1}, {2}].\n", x_val, y_val, z_val);
         }
 
         // default destructor
         virtual ~Point3D()
         {
-            std::print("Point3D is destroyed.\n");
+            std::cout << ("Point3D is destroyed.\n");
         }
 
         // Copy constructor
@@ -41,7 +40,7 @@ class Point3D : public Point2D<T>
                 this->x = other.x;
                 this->y = other.y;
                 z = other.z;
-                std::print("Point3D is copied.\n");
+                std::cout << ("Point3D is copied.\n");
             }
         }
 
@@ -56,7 +55,7 @@ class Point3D : public Point2D<T>
                 other.x = T {};
                 other.y = T {};
                 other.z = T {};
-                std::print("Point3D is moved.\n");
+                std::cout << ("Point3D is moved.\n");
             }
         }
 
@@ -68,7 +67,7 @@ class Point3D : public Point2D<T>
                 this->x = other.x;
                 this->y = other.y;
                 z = other.z;
-                std::print("Point3D is copied.\n");
+                std::cout << ("Point3D is copied.\n");
             }
             return *this;
         }
@@ -84,7 +83,7 @@ class Point3D : public Point2D<T>
                 other.x = T {};
                 other.y = T {};
                 other.z = T {};
-                std::print("Point3D is moved.\n");
+                std::cout << ("Point3D is moved.\n");
             }
             return *this;
         }

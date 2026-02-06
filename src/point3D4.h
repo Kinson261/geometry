@@ -19,17 +19,17 @@ class Point3D4 : public Point3D<T>
         // default constructor
         Point3D4() : Point3D<T>(), s(T {1})
         {
-            std::print("Point3D4 created without initialization.\n");
+            std::cout << ("Point3D4 created without initialization.\n");
         }
 
         Point3D4(T x_val, T y_val, T z_val) : Point3D<T>(x_val, y_val, z_val), s(T {1})
         {
-            std::print("Point3D4 created with value [{0}, {1}, {2}, {3}].\n", x_val, y_val, z_val, s);
+            std::cout << ("Point3D4 created with value [{0}, {1}, {2}, {3}].\n", x_val, y_val, z_val, s);
         }
 
         Point3D4(T x_val, T y_val, T z_val, T s_val) : Point3D<T>(x_val, y_val, z_val), s(s_val)
         {
-            std::print("Point3D4 created with value [{0}, {1}, {2}, {3}].\n", x_val, y_val, z_val, s_val);
+            std::cout << ("Point3D4 created with value [{0}, {1}, {2}, {3}].\n", x_val, y_val, z_val, s_val);
         }
 
         Point3D4(Point3D<T>& pt) : Point3D<T>(pt), s(T {1}) {}
@@ -37,7 +37,7 @@ class Point3D4 : public Point3D<T>
         // default destructor
         ~Point3D4()
         {
-            std::print("Point3D4 is destroyed\n");
+            std::cout << ("Point3D4 is destroyed\n");
         }
 
         // Copy constructor
@@ -49,7 +49,7 @@ class Point3D4 : public Point3D<T>
                 this->y = other.y;
                 this->z = other.z;
                 s = other.s;
-                std::print("Point3D4 is copied\n");
+                std::cout << ("Point3D4 is copied\n");
             }
         }
 
@@ -66,7 +66,7 @@ class Point3D4 : public Point3D<T>
                 other.y = T {};
                 other.z = T {};
                 s = T {};
-                std::print("Point3D4 is moved\n");
+                std::cout << ("Point3D4 is moved\n");
             }
         }
 
@@ -79,7 +79,7 @@ class Point3D4 : public Point3D<T>
                 this->y = other.y;
                 this->z = other.z;
                 s = other.s;
-                std::print("Point3D4 is copied\n");
+                std::cout << ("Point3D4 is copied\n");
             }
             return *this;
         }
@@ -97,7 +97,7 @@ class Point3D4 : public Point3D<T>
                 other.y = T {};
                 other.z = T {};
                 s = T {};
-                std::print("Point3D4 is moved\n");
+                std::cout << ("Point3D4 is moved\n");
             }
             return *this;
         }

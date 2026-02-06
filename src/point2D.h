@@ -4,10 +4,8 @@
 #include <array>
 #include <cassert>
 #include <concepts>
-#include <format>
 #include <iostream>
 #include <ostream>
-#include <print>
 #include <stdexcept>
 #include <type_traits>
 #include <vector>
@@ -28,7 +26,7 @@ class Point2D
 
         Point2D(T x_val, T y_val) : x(x_val), y(y_val)
         {
-            std::print("Point2D created with value [{0}, {1}]\n", x_val, y_val);
+            std::cout << ("Point2D created with value [{0}, {1}]\n", x_val, y_val);
         }
 
         Point2D(std::array<T, 2> arr) : x(arr.at(0)), y(arr.at(1)) {}
@@ -54,13 +52,13 @@ class Point2D
         // Default destructor
         virtual ~Point2D()
         {
-            std::print("Point2D destroyed.\n");
+            std::cout << ("Point2D destroyed.\n");
         }
 
         // Copy constructor
         Point2D(const Point2D& other) : x(other.x), y(other.y)
         {
-            std::print("Point2D is copied.\n");
+            std::cout << ("Point2D is copied.\n");
         }
 
         // Copy assignment
@@ -70,7 +68,7 @@ class Point2D
             {
                 x = other.x;
                 y = other.y;
-                std::print("Point2D is copied by assignment.\n");
+                std::cout << ("Point2D is copied by assignment.\n");
             }
             return *this;
         }
@@ -84,7 +82,7 @@ class Point2D
                 y = std::move(other.y);
                 other.x = T {};
                 other.y = T {};
-                std::print("Point2D is moved.\n");
+                std::cout << ("Point2D is moved.\n");
             }
         }
 
@@ -97,7 +95,7 @@ class Point2D
                 y = std::move(other.y);
                 other.x = T {};
                 other.y = T {};
-                std::print("Point2D is moved by assignment.\n");
+                std::cout << ("Point2D is moved by assignment.\n");
             }
             return *this;
         }
@@ -157,7 +155,7 @@ class Point2D
         {
             x = static_cast<T>(other.get().at(0));
             y = static_cast<T>(other.get().at(1));
-            std::print("Point2D is copied by assignment from another type.\n");
+            std::cout << ("Point2D is copied by assignment from another type.\n");
             return *this;
         }
 
