@@ -143,7 +143,7 @@ class Vector<T, 4>
         }
 
         template <typename U>
-        bool collinear(const Vector<U, 4>& other) const
+        bool is_collinear(const Vector<U, 4>& other) const
         {
             std::array<T, 4> coord1 = get();
             std::array<U, 4> coord2 = other.get();
@@ -155,7 +155,7 @@ class Vector<T, 4>
         }
 
         template <typename U>
-        bool orthogonal(const Vector<U, 4>& other) const
+        bool is_orthogonal(const Vector<U, 4>& other) const
         {
             std::array<T, 4> coord1 = get();
             std::array<U, 4> coord2 = other.get();
@@ -412,7 +412,7 @@ class Vector<T, 3>
         }
 
         template <typename U>
-        bool collinear(const Vector<U, 3>& other) const
+        bool is_collinear(const Vector<U, 3>& other) const
         {
             std::array<T, 3> coord1 = get();
             std::array<U, 3> coord2 = other.get();
@@ -420,7 +420,7 @@ class Vector<T, 3>
         }
 
         template <typename U>
-        bool orthogonal(const Vector<U, 3>& other) const
+        bool is_orthogonal(const Vector<U, 3>& other) const
         {
             std::array<T, 3> coord1 = get();
             std::array<U, 3> coord2 = other.get();
@@ -632,7 +632,7 @@ class Vector<T, 2>
         }
 
         template <typename U>
-        bool collinear(const Vector<U, 2>& other) const
+        bool is_collinear(const Vector<U, 2>& other) const
         {
             std::array<T, 2> coord1 = get();
             std::array<U, 2> coord2 = other.get();
@@ -640,7 +640,7 @@ class Vector<T, 2>
         }
 
         template <typename U>
-        bool orthogonal(const Vector<U, 2>& other) const
+        bool is_orthogonal(const Vector<U, 2>& other) const
         {
             std::array<T, 2> coord1 = get();
             std::array<U, 2> coord2 = other.get();

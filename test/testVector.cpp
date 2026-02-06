@@ -231,8 +231,8 @@ TEST_CASE("Setter", "[Vector]")
             Vector<int, 2> pt2(2, 4);
             std::array<int, 2> pt3 {2, 4};
 
-            REQUIRE(pt1.collinear(pt2) == true);
-            REQUIRE(pt1.collinear(Vector<int, 2>(pt3)) == true);
+            REQUIRE(pt1.is_collinear(pt2) == true);
+            REQUIRE(pt1.is_collinear(Vector<int, 2>(pt3)) == true);
         }
         SECTION("[Vector<T,3>]")
         {
@@ -240,8 +240,8 @@ TEST_CASE("Setter", "[Vector]")
             Vector<int, 3> pt2 {2, 4, 4};
             std::array<int, 3> pt3 {2, 4, 4};
 
-            REQUIRE(pt1.collinear(pt2) == true);
-            REQUIRE(pt1.collinear(Vector<int, 3>(pt3)) == true);
+            REQUIRE(pt1.is_collinear(pt2) == true);
+            REQUIRE(pt1.is_collinear(Vector<int, 3>(pt3)) == true);
         }
         SECTION("[Vector<T,4>]")
         {
@@ -249,8 +249,8 @@ TEST_CASE("Setter", "[Vector]")
             Vector<int, 4> pt2 {2, 4, 4, 1};
             std::array<int, 4> pt3 {2, 4, 4, 1};
 
-            REQUIRE(pt1.collinear(pt2) == true);
-            REQUIRE(pt1.collinear(Vector<int, 4>(pt3)) == true);
+            REQUIRE(pt1.is_collinear(pt2) == true);
+            REQUIRE(pt1.is_collinear(Vector<int, 4>(pt3)) == true);
         }
     }
 
@@ -262,8 +262,8 @@ TEST_CASE("Setter", "[Vector]")
             Vector<int, 2> pt2 {0, 1};
             std::array<int, 2> pt3 {0, 1};
 
-            REQUIRE(pt1.orthogonal(pt2) == true);
-            REQUIRE(pt1.orthogonal(Vector<int, 2>(pt3)) == true);
+            REQUIRE(pt1.is_orthogonal(pt2) == true);
+            REQUIRE(pt1.is_orthogonal(Vector<int, 2>(pt3)) == true);
         }
 
         SECTION("[Vector<T,3>]")
@@ -272,9 +272,9 @@ TEST_CASE("Setter", "[Vector]")
             Vector<int, 3> pt2 {0, 1, 0};
             std::array<int, 3> pt3 {0, 0, 1};
 
-            REQUIRE(pt1.orthogonal(pt2) == true);
-            REQUIRE(pt1.orthogonal(Vector<int, 3>(pt3)) == true);
-            REQUIRE(pt2.orthogonal(Vector<int, 3>(pt3)) == true);
+            REQUIRE(pt1.is_orthogonal(pt2) == true);
+            REQUIRE(pt1.is_orthogonal(Vector<int, 3>(pt3)) == true);
+            REQUIRE(pt2.is_orthogonal(Vector<int, 3>(pt3)) == true);
         }
         SECTION("[Vector<T,4>]")
         {
@@ -283,10 +283,10 @@ TEST_CASE("Setter", "[Vector]")
             std::array<int, 4> pt3 {0, 0, 1, 1};
             std::array<int, 4> pt4 {0, 0, 1, 2};
 
-            REQUIRE(pt1.orthogonal(pt2) == true);
-            REQUIRE(pt1.orthogonal(Vector<int, 4>(pt3)) == true);
-            REQUIRE(pt2.orthogonal(Vector<int, 4>(pt3)) == true);
-            REQUIRE_THROWS(pt2.orthogonal(Vector<int, 4>(pt4)));
+            REQUIRE(pt1.is_orthogonal(pt2) == true);
+            REQUIRE(pt1.is_orthogonal(Vector<int, 4>(pt3)) == true);
+            REQUIRE(pt2.is_orthogonal(Vector<int, 4>(pt3)) == true);
+            REQUIRE_THROWS(pt2.is_orthogonal(Vector<int, 4>(pt4)));
         }
     }
 
